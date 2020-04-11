@@ -1975,7 +1975,9 @@ blockquote {
 .hljs-strong {
   font-weight: bold;
 }
-body {
+.bg-color .bg-color {
+      background: transparent !important;
+    }body {
       background-color: #212529;
     }
     .nav-toggle .line {
@@ -1999,7 +2001,7 @@ body {
       border-bottom-color: #555;
     }
     .archive-timeline-box::after, .tag-timeline-wrapper::after {
-      background: #eeeeeefe;
+      background: #eeeeeecc;
     }h1, h2, h3, h4, h5, h6 {
       color: #555;
     }
@@ -2043,11 +2045,11 @@ body {
       }.nav-item a:hover {
         color: #222;
       }.nav-item-active {
-      background: #66d9e8fe;
+      background: #66d9e8cc;
     }
 
     .nav-item:hover {
-      background: #66d9e8fe;
+      background: #66d9e8cc;
       color: rgba(0, 0, 0, 0.98);
     }.site-author-image {
       border-radius: 50%;
@@ -2083,7 +2085,7 @@ body {
       color: #fa5252;
       border-bottom-color: #fa5252;
     }.bg-color {
-      background-color: #f8f9fafe;
+      background-color: #f8f9facc;
     }
       .site-meta {
         background: #000 !important;
@@ -2092,13 +2094,13 @@ body {
         background: #000 !important;
       }
     .brand {
-      background: #000000fe;
+      background: #000000cc;
     }
     .main-title {
       color: #c92a2a;
     }
     .mist .site-title i {
-      background: #c92a2afe;
+      background: #c92a2acc;
     }/*可任意修改样式，或恢复预设值，保存后生效
 相对“默认样式”而作的修改会用  红色 标注*/
 
@@ -2398,5 +2400,7 @@ a[href^="#"] sup
 {/*每级目录的缩进*/
   margin-left:25px;
 }.box-shadow-wrapper {
+      padding: 10px;
+    }.box-shadow-wrapper {
       box-shadow: none !important;
     }
