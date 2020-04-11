@@ -8,7 +8,7 @@
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
 <title>a a a | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1586588480789">
+<link rel="shortcut icon" href="/favicon.ico?v=1586611787541">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -164,7 +164,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">1</span>
+        <span class="site-item-stat-count">2</span>
         <span class="site-item-stat-name">文章</span>
       </a>
     </div>
@@ -561,7 +561,7 @@ window.addEventListener('load', function() {
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>2751<span class="pc-show">字数</span></span>
+      <span>2819<span class="pc-show">字数</span></span>
     </span>
     
   </div>
@@ -607,6 +607,16 @@ window.addEventListener('load', function() {
         } catch (IOException e) {
             e.printStackTrace();
         }
+}
+</code></pre>
+<pre><code class="language-go">// ConsumeClaim must start a consumer loop of ConsumerGroupClaim's Messages().
+func (consumer *DispatcherHandler) ConsumeClaim(session sarama.ConsumerGroupSession,claim sarama.ConsumerGroupClaim) error {
+	logrus.WithField(&quot;topic&quot;, claim.Topic()).WithField(&quot;partition&quot;, claim.Partition()).Info(&quot; start consumer topic&quot;)
+	groupHandler, exist := consumer.topicHandler[claim.Topic()]
+	if !exist {
+		logrus.WithField(&quot;topic&quot;, claim.Topic()).Error(&quot;can't find topic handler &quot;)
+	}
+	return groupHandler.ConsumeClaim(session, claim)
 }
 </code></pre>
 <p>要精确指定语言（如：<code>java,cpp,css,xml,javascript,python,php,go,kotlin,lua,objectivec</code>等等）时，在头部直接指定，如：```javascript，如下：</p>
@@ -739,9 +749,9 @@ window.addEventListener('load', function() {
 <p>注：表格在公众号预览时，可能在PC端显示的不是正确的全屏，但在手机上预览时就会正常显示为全屏的了。</p>
 <h4 id="任务列表">任务列表</h4>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2226983"><label class="task-list-item-label" for="task-item-2226983"> 任务1，已完成;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-5802075"><label class="task-list-item-label" for="task-item-5802075"> 任务2，已完成;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1829258"><label class="task-list-item-label" for="task-item-1829258"> 任务3，未完成;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-563361"><label class="task-list-item-label" for="task-item-563361"> 任务1，已完成;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8118073"><label class="task-list-item-label" for="task-item-8118073"> 任务2，已完成;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-5309146"><label class="task-list-item-label" for="task-item-5309146"> 任务3，未完成;</label></li>
 </ul>
 <h4 id="注脚">注脚</h4>
 <p>我是注脚<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。点点就能知到我跳到了那儿。<br>
@@ -824,6 +834,10 @@ dart,r,delphi,vb(vbnet),vbs(vbscript),vbscript-html</p>
   </div>
   <div class="nav">
     <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="Gridea+github page = 专注写作的博客系统" href="https://optimistic9527.github.io/post/grideagithub-page-zhuan-zhu-xie-zuo-de-bo-ke-xi-tong/">Gridea+github page = 专注写作的博客系统</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="Gridea+github page = 专注写作的博客系统" href="https://optimistic9527.github.io/post/grideagithub-page-zhuan-zhu-xie-zuo-de-bo-ke-xi-tong/">上一篇</a>
       
     </div>
     <div class="nav-next">

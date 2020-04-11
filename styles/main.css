@@ -1674,6 +1674,7 @@ blockquote {
   overflow: auto;
 }
 .next-md-body pre code {
+  display: inline-block;
   border: 0;
   line-height: inherit;
   margin: 0;
