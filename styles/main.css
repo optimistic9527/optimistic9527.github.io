@@ -2015,43 +2015,43 @@ body {
     .node-title::before {
       background-color: #212529;
     }a {
-      color: #212529;
+      color: #4dabf7;
     }
     
     .next-md-body a, .friends-box a  {
-      color: #212529;
-      border-bottom: 1px solid #212529;
+      color: #4dabf7;
+      border-bottom: 1px solid #4dabf7;
     }a:hover {
-      color: #222;
+      color: #22b8cf;
     }
     
     .archive-timeline-box .tag-node:hover::before {
-      background-color: #222;
+      background-color: #22b8cf;
     }
     
     .markdownIt-TOC a:hover {
-      color: #222;
-      border-bottom-color: #222;
+      color: #22b8cf;
+      border-bottom-color: #22b8cf;
     }
 
     .next-md-body a:hover, .friends-box a:hover {
-      color: #222;
-      border-bottom-color: #222;
+      color: #22b8cf;
+      border-bottom-color: #22b8cf;
     }.nav-item a {
-        color: #555;
+        color: #868e96;
       }
       .nav-item-active a {
-        color: #555;
-        border-bottom: 1px solid #555 !important;
+        color: #868e96;
+        border-bottom: 1px solid #868e96 !important;
       }.nav-item a:hover {
-        color: #222;
-        border-bottom: 1px solid #222 !important;
+        color: #d0ebff;
+        border-bottom: 1px solid #d0ebff !important;
       }.nav-item-active {
-      background: #212529fe;
+      background: #c5f6fafe;
     }
 
     .nav-item:hover {
-      background: #212529fe;
+      background: #c5f6fafe;
       color: rgba(0, 0, 0, 0.98);
     }.site-author-image {
       border-radius: 50%;
@@ -2062,7 +2062,15 @@ body {
       transition-property: all;
       transition-duration: 59s;
       transition-timing-function: cubic-bezier(.34,0,.84,1);
-    }.markdownIt-TOC a {
+    }.muse .sidebar, .mist .sidebar {
+        right: 0 !important;
+        left: auto !important;
+      }
+      .drawer-box {
+        right: 30px !important;
+        left: auto !important;
+      }
+      .markdownIt-TOC a {
       color: #eee;
       border-bottom-color: #eee;
     }.markdownIt-TOC a:hover {
@@ -2090,19 +2098,19 @@ body {
       background-color: #f8f9fafe;
     }
       .site-meta {
-        background: #000 !important;
+        background: #212529 !important;
       }
       .head-top-line {
-        background: #000 !important;
+        background: #212529 !important;
       }
     .brand {
-      background: #000000fe;
+      background: #ffdeebfe;
     }
     .main-title {
-      color: #212529;
+      color: #ffdeeb;
     }
     .mist .site-title i {
-      background: #212529fe;
+      background: #ffdeebfe;
     }/*可任意修改样式，或恢复预设值，保存后生效
 相对“默认样式”而作的修改会用  红色 标注*/
 

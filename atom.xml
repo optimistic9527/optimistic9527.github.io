@@ -2,12 +2,19 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://optimistic9527.github.io</id>
     <title>Gridea</title>
-    <updated>2020-04-11T05:50:07.858Z</updated>
+    <updated>2020-04-11T06:14:58.516Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://optimistic9527.github.io"/>
     <link rel="self" href="https://optimistic9527.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
+    <subtitle>感谢曾经的自己</subtitle>
     <logo>https://optimistic9527.github.io/images/avatar.png</logo>
     <icon>https://optimistic9527.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[a a a]]></title>
+        <id>https://optimistic9527.github.io/post/a-a-a/</id>
+        <link href="https://optimistic9527.github.io/post/a-a-a/">
+        </link>
+        <updated>2020-04-11T06:04:33.000Z</updated>
+    </entry>
 </feed>
