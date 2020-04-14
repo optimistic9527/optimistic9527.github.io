@@ -8,7 +8,7 @@
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
 <title>计算机组成原理回顾-CPU功能与结构 | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1586875716012">
+<link rel="shortcut icon" href="/favicon.ico?v=1586877765166">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -233,6 +233,7 @@
 <ul>
 <li><a href="#cpu%E7%9A%84%E5%8A%9F%E8%83%BD">CPU的功能</a></li>
 <li><a href="#cup%E5%86%85%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8">CUP内的寄存器</a></li>
+<li><a href="#%E6%8C%87%E4%BB%A4%E5%91%A8%E6%9C%9F">指令周期</a></li>
 </ul>
 </li>
 </ul>
@@ -541,12 +542,12 @@ window.addEventListener('load', function() {
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>2分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>261<span class="pc-show">字数</span></span>
+      <span>320<span class="pc-show">字数</span></span>
     </span>
     
   </div>
@@ -577,6 +578,16 @@ window.addEventListener('load', function() {
 <li><strong>存储器地址寄存器(MAR)</strong>:用来保存当前CPU所访问的主存单元的地址</li>
 <li><strong>状态标志寄存器(PSWR)</strong>：存放程序状态字(PSW)</li>
 <li><strong>累加器(ACC)</strong>：用来存放操作数或运算结果</li>
+</ul>
+<h3 id="指令周期">指令周期</h3>
+<blockquote>
+<p>一条指令周期分四个工作周期</p>
+</blockquote>
+<ul>
+<li><strong>取址周期</strong>:</li>
+<li><strong>间址周期</strong></li>
+<li><strong>执行周期</strong></li>
+<li><strong>中断周期</strong>:把PC寄存器中当前程序的执行的地址保存到内存中或者栈中</li>
 </ul>
 
               </div>
