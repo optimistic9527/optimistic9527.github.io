@@ -8,7 +8,7 @@
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
 <title>计算机组成原理回顾-存储器的概述 | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1586826650087">
+<link rel="shortcut icon" href="/favicon.ico?v=1586875425098">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -28,7 +28,7 @@
 
 
     <meta name="description" content="计算机组成原理回顾-存储器的概述" />
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="计算机组成原理,计算机,计算机基础知识" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -182,7 +182,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">4</span>
+        <span class="site-item-stat-count">6</span>
         <span class="site-item-stat-name">文章</span>
       </a>
     </div>
@@ -234,6 +234,7 @@
 <li><a href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB">存储器的分类</a></li>
 <li><a href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84">存储器的层次结构</a></li>
 <li><a href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%B1%82%E6%AC%A1">存储器系统的层次</a></li>
+<li><a href="#%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86">局部性原理</a></li>
 </ul>
 </li>
 </ul>
@@ -515,14 +516,39 @@ window.addEventListener('load', function() {
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
+      <span class="meta-item">
+        <i class="fa fa-folder-o"></i>
+        <span class="pc-show">分类于</span>
+        
+          
+            <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/">
+              <span>计算机组成原理</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/">
+              <span>计算机</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/RukXges-F/">
+              <span>计算机基础知识</span>
+            </a>
+          
+        
+      </span>
+      <span class="post-meta-divider">|</span>
+    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>2分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>185<span class="pc-show">字数</span></span>
+      <span>351<span class="pc-show">字数</span></span>
     </span>
     
   </div>
@@ -561,6 +587,11 @@ window.addEventListener('load', function() {
 <figure data-type="image" tabindex="1"><img src="https://optimistic9527.github.io/images/%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84.png" alt="" loading="lazy"></figure>
 <h3 id="存储器系统的层次">存储器系统的层次</h3>
 <figure data-type="image" tabindex="2"><img src="https://optimistic9527.github.io/images/%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%B1%82%E6%AC%A1.png" alt="" loading="lazy"></figure>
+<h3 id="局部性原理">局部性原理</h3>
+<ul>
+<li><strong>时间局部性</strong>:如果程序中某条指令一旦执行，则不久以后该指令可能再次执行，如果某数据被访问过，则不久以后该数据可能再次被访问。产生时间局部性的典型原因就是因为程序中存在大量的<code>循环操作</code>。</li>
+<li><strong>空间局部性</strong>:一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也将被访问，即程序在一段时间内所访问的地址，可能集中在一定的范围之内，其典型情况就是程序的<code>顺序执行</code></li>
+</ul>
 
               </div>
               <div class="post-footer">
@@ -580,9 +611,19 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
+      <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/"># 计算机组成原理</a>
+    
+      <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/"># 计算机</a>
+    
+      <a href="https://optimistic9527.github.io/tag/RukXges-F/"># 计算机基础知识</a>
+    
   </div>
   <div class="nav">
     <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="计算机组成原理回顾-指令系统" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhi-ling-xi-tong/">计算机组成原理回顾-指令系统</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="计算机组成原理回顾-指令系统" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhi-ling-xi-tong/">上一篇</a>
       
     </div>
     <div class="nav-next">
