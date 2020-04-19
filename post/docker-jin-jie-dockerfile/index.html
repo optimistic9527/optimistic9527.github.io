@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>计算机组成原理回顾-中断系统 | Optimistic9527</title>
+<title>Docker进阶-Dockerfile | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1587304257056">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="计算机组成原理回顾-中断系统" />
-    <meta name="keywords" content="计算机组成原理,计算机,计算机基础知识" />
+    <meta name="description" content="Docker进阶-Dockerfile" />
+    <meta name="keywords" content="Docker" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -231,8 +231,26 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">中断的基本概念</a></li>
-<li><a href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%88%86%E7%B1%BB">中断的分类</a></li>
+<li><a href="#dockerfile%E6%A6%82%E8%BF%B0">Dockerfile概述</a></li>
+<li><a href="#dockerfile-format">Dockerfile Format</a></li>
+<li><a href="#dockerfile-instructions">Dockerfile Instructions</a>
+<ul>
+<li><a href="#from">FROM</a></li>
+<li><a href="#lable">LABLE</a></li>
+<li><a href="#copy">COPY</a></li>
+<li><a href="#add">ADD</a></li>
+<li><a href="#workdir">WORKDIR</a></li>
+<li><a href="#volume">VOLUME</a></li>
+<li><a href="#export">EXPORT</a></li>
+<li><a href="#env">ENV</a></li>
+<li><a href="#arg">ARG</a></li>
+<li><a href="#run">RUN</a></li>
+<li><a href="#cmd">CMD</a></li>
+<li><a href="#entrypoint">ENTRYPOINT</a></li>
+<li><a href="#user">USER</a></li>
+<li><a href="#healthcheck">HEALTHCHECK</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -501,8 +519,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhong-duan-xi-tong/">
-      计算机组成原理回顾-中断系统
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">
+      Docker进阶-Dockerfile
     </a>
   </h1>
   <div class="post-meta">
@@ -510,7 +528,7 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-04-18</span>
+      <span>2020-04-19</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -519,20 +537,8 @@ window.addEventListener('load', function() {
         <span class="pc-show">分类于</span>
         
           
-            <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/">
-              <span>计算机组成原理</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/">
-              <span>计算机</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/RukXges-F/">
-              <span>计算机基础知识</span>
+            <a href="https://optimistic9527.github.io/tag/tHHkcod58/">
+              <span>Docker</span>
             </a>
           
         
@@ -541,30 +547,180 @@ window.addEventListener('load', function() {
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>5分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>259<span class="pc-show">字数</span></span>
+      <span>939<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <h3 id="中断的基本概念">中断的基本概念</h3>
+                <h3 id="dockerfile概述">Dockerfile概述</h3>
 <blockquote>
-<p>在计算机执行程序的过程中，当出现<code>异常情况</code>或<code>特殊请求</code>时，计算机停止<code>现行程序</code>的运行，<code>转向</code>这些异常情况或特殊请求的处理，处理结束后再<code>返回</code>到现行程序的间断处继续执行原程序，这个过程称为中断</p>
+<p>Dockerfile is nothig but the source code for building Docker images</p>
 </blockquote>
-<h3 id="中断的分类">中断的分类</h3>
-<pre><code>- **中断源**的不通
-    - **内中断**:程序运行错误引起的中断,如缺叶中断，除数为0，越界错误，存取好保护错误，非法指令，特权指令，运行超时，等待超时，算术运算错误
-    - **外中断**:即由外部设备，接口引起的中断
-- CPU能不能限制某些中断发生
-    - **可屏蔽中断**：被CPU通过指令限制某些设备发出中断请求的中断
-        - CPU关中断：CPU不响应中断
-        - **中断屏蔽字**：CPU只响应`优先级最高`的中断
-- **不可屏蔽中断**:不允许屏蔽的中断，如电源掉电</code></pre>
+<ul>
+<li>Docker can build images automatically by reading the sinstructions from a dockerfile</li>
+<li>using docker build users can create an automated build that executes several command-line instructions in succession</li>
+</ul>
+<h3 id="dockerfile-format">Dockerfile Format</h3>
+<ul>
+<li>Format
+<ul>
+<li><code>#</code>注释</li>
+<li><code>INSTRUCTION</code> <code>arguments</code>
+<ul>
+<li>指令并不是大小写敏感的，但是我们约定俗成的，指令大写，参数小写，更加容易区分</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Dockerfile是安装dockerfile写的指令<code>顺序执行</code>的</li>
+<li>Dockerfile的第一条指令必须是<code>FROM</code>用来指定基础镜像</li>
+</ul>
+<h3 id="dockerfile-instructions">Dockerfile Instructions</h3>
+<h4 id="from">FROM</h4>
+<ul>
+<li>FROM指令是最要的一个并且必须为Dockerfile文件开篇的第一行非注释行，用户映射文件构建过程指令基础镜像</li>
+<li>Syntax
+<ul>
+<li><code>FORM</code> &lt;repository&gt;[:&lt;tag&gt;}</li>
+</ul>
+</li>
+</ul>
+<h4 id="lable">LABLE</h4>
+<ul>
+<li>Label是为镜像添加<code>元信息</code>的</li>
+<li>Lable是一个个的<code>键值对</code></li>
+<li>一个镜像可以额拥有多个键值对</li>
+<li>Syntax
+<ul>
+<li><code>LABLE</code> &lt;key&gt;=&lt;value&gt; &lt;key&gt;=&lt;value&gt;...</li>
+</ul>
+</li>
+</ul>
+<h4 id="copy">COPY</h4>
+<ul>
+<li>用于从Docker主机复制文件到创建的新映像文件</li>
+<li>Synctax
+<ul>
+<li><code>COPY</code> &lt;src&gt; ... &lt;dest&gt; (dest最好使用绝对路径，否则copy会以<code>WORKDIR</code>为起始路径，src必须是在当前构建环境目录或dockerfile的子目录)</li>
+</ul>
+</li>
+</ul>
+<h4 id="add">ADD</h4>
+<ul>
+<li>ADD指令与COPY类似，ADD支持使用TAR文件和URL路径(url会去<code>联网下载</code>该文件，如果是<code>tar</code>压缩文件，会<code>自动解压</code>到目标路径)</li>
+<li>Synctax
+<ul>
+<li><code>ADD</code> &lt;src&gt; ... &lt;dest&gt;</li>
+</ul>
+</li>
+</ul>
+<h4 id="workdir">WORKDIR</h4>
+<ul>
+<li>用于为Dockerfile中左右的RUN，CMD，ENTRYPOINT，COPY，ADD指定设定工作目录</li>
+<li>Synatx
+<ul>
+<li><code>WORKDIR</code> &lt;dirpath&gt;</li>
+</ul>
+</li>
+</ul>
+<h4 id="volume">VOLUME</h4>
+<ul>
+<li>用于image中创建一个挂载点目录，以挂载Dockerhost上的卷或其他容器上的卷(无法绑定挂载)</li>
+<li>Syntax
+<ul>
+<li><code>VOLUME</code> &lt;containerpath&gt;</li>
+</ul>
+<h4 id="export">EXPORT</h4>
+<ul>
+<li>用于为容器打开指定要监听的端口以实现与外部通讯(这只是一个<code>声明</code>，定不会真的为应用容器开启这个端口服务，需要自己指定-p)</li>
+<li>Synatx
+<ul>
+<li><code>EXPOSE</code> &lt;port&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="env">ENV</h4>
+<ul>
+<li>用于为镜像定义所需的环境变量，并可被Dockerfile文件中位于其后的其他指令所调用</li>
+<li>Syntax
+<ul>
+<li><code>ENV</code> &lt;key&gt; &lt;value&gt;</li>
+<li><code>ENV</code> &lt;key&gt;=&lt;value&gt;...</li>
+</ul>
+</li>
+</ul>
+<h4 id="arg">ARG</h4>
+<ul>
+<li>这种变量只存在于镜像构建的时候，一旦镜像构建完成就失效</li>
+<li>Syntax
+<ul>
+<li><code>ARG</code> &lt;key&gt; &lt;value&gt;</li>
+<li><code>ARG</code> &lt;key&gt;=&lt;value&gt;...</li>
+</ul>
+</li>
+</ul>
+<h4 id="run">RUN</h4>
+<ul>
+<li>用于指定<code>docker build过程</code>中运行的程序，其可以是任何命令</li>
+<li>Syntax
+<ul>
+<li><code>RUN</code> &lt;commond&gt; &lt;arg&gt;&amp;&amp; <br>
+&lt;commond&gt; &lt;arg&gt;&amp;&amp; ..</li>
+<li><code>RUN</code> [&quot;&lt;executable&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;]</li>
+</ul>
+</li>
+</ul>
+<h4 id="cmd">CMD</h4>
+<ul>
+<li>类似于RUN命令，但是运行的时间点不同，CMD指令的首要目的在于为启动的容器指定默认要运行的程序。</li>
+<li>Syntax
+<ul>
+<li><code>CMD</code> &lt;commond&gt; &lt;arg&gt;</li>
+<li><code>CMD</code> [&quot;&lt;executable&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;]</li>
+<li><code>CMD</code> [&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;] (这种方式是为ENTRYPOINT指令提供默认的参数)</li>
+</ul>
+</li>
+</ul>
+<h4 id="entrypoint">ENTRYPOINT</h4>
+<ul>
+<li>类似CMD指令饿的功能，用于为容器指定默认运行程序，从而使的容器像一个单独的可执行程序</li>
+<li>Syntax
+<ul>
+<li><code>ENTRYPOINT</code> &lt;commond&gt; &lt;arg&gt;</li>
+<li><code>ENTRYPOINT</code> [&quot;&lt;executable&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;]</li>
+</ul>
+</li>
+</ul>
+<h4 id="user">USER</h4>
+<ul>
+<li>用于指定运行image时或者运行Dockerfile中任何RUN，CMD或者ENTRYPOINT指令指定的程序时的用户名或UID，默认就是root</li>
+<li>Syntax
+<ul>
+<li><code>USER</code> &lt;username&gt;[:&lt;usergroup&gt;]</li>
+</ul>
+</li>
+</ul>
+<h4 id="healthcheck">HEALTHCHECK</h4>
+<ul>
+<li>用来真正判断容器的状态是否正常的</li>
+<li>Syntax</li>
+<li>HEALTHCHECK [option] CMD &lt;command&gt;
+<ul>
+<li><code>--start-period</code>=&lt;time&gt;:启动后延迟多久开始健康检测，默认0s</li>
+<li><code>--interval</code>=&lt;time&gt;：健康检查的间隔，默认30s</li>
+<li><code>--timeout</code>=&lt;time&gt;：健康检查命令运行超时时间，如果超过这个时间，本次健康检查就被视为失败，默认 30 秒</li>
+<li><code>--retries</code>=&lt;times&gt;:当连续失败指定次数后，则将容器状态视为<code>unhealthy</code>，默认 3 次</li>
+</ul>
+</li>
+</ul>
 
               </div>
               <div class="post-footer">
@@ -575,7 +731,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhong-duan-xi-tong/" title="计算机组成原理回顾-中断系统">计算机组成原理回顾-中断系统</a>
+      <a href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/" title="Docker进阶-Dockerfile">Docker进阶-Dockerfile</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -584,25 +740,17 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
-      <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/"># 计算机组成原理</a>
-    
-      <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/"># 计算机</a>
-    
-      <a href="https://optimistic9527.github.io/tag/RukXges-F/"># 计算机基础知识</a>
+      <a href="https://optimistic9527.github.io/tag/tHHkcod58/"># Docker</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Docker进阶-Dockerfile" href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">Docker进阶-Dockerfile</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Docker进阶-Dockerfile" href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="计算机组成原理回顾-总线概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zong-xian-gai-shu/">计算机组成原理回顾-总线概述</a>
-        <a class="nav-mobile-next" title="计算机组成原理回顾-总线概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zong-xian-gai-shu/">下一篇</a>
+        <a class="nav-pc-next" title="计算机组成原理回顾-中断系统" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhong-duan-xi-tong/">计算机组成原理回顾-中断系统</a>
+        <a class="nav-mobile-next" title="计算机组成原理回顾-中断系统" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhong-duan-xi-tong/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
