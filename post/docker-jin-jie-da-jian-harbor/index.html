@@ -8,7 +8,7 @@
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
 <title>Docker进阶-搭建Harbor | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1587548008864">
+<link rel="shortcut icon" href="/favicon.ico?v=1587549699654">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -516,12 +516,12 @@ window.addEventListener('load', function() {
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>313<span class="pc-show">字数</span></span>
+      <span>502<span class="pc-show">字数</span></span>
     </span>
     
   </div>
@@ -576,8 +576,45 @@ subjectAltName = @alt_names
 DNS.1=horbor.gxy.com
 EOF
 </code></pre>
+<ol start="4">
+<li>使用v3.ext文件为您的Harbor主机生成证书</li>
+</ol>
+<pre><code>openssl x509 -req -sha512 -days 3650 \
+    -extfile v3.ext \
+    -CA ca.crt -CAkey ca.key -CAcreateserial \
+    -in harbor.gxy.com.csr \
+    -out harbor.gxy.com.crt
+</code></pre>
 <ul>
 <li>提供证书给Harbor和Docker</li>
+</ul>
+<ol>
+<li>把服务器证书与服务器私钥移动到harbor下进行管理</li>
+</ol>
+<pre><code>cp harbor.gxy.com.crt /usr/local/harbor/cert/
+cp harbor.gxy.com.key /usr/local/harbor/cert/
+</code></pre>
+<ol start="2">
+<li>将harbor.gxy.com.crt转换为harbor.gxy.com.cert，以供Docker使用</li>
+</ol>
+<pre><code>openssl x509 -inform PEM -in harbor.gxy.com.crt -out harbor.gxy.com.cert
+</code></pre>
+<ol start="3">
+<li>服务器的证书，key，ca拷贝到Docker的认证文件夹下</li>
+</ol>
+<pre><code>cp harbor.gxy.com.cert /etc/docker/certs.d/harbor.gxy.com/
+cp harbor.gxy.com.key /etc/docker/certs.d/harbor.gxy.com/
+cp ca.crt /etc/docker/certs.d/harbor.gxy.com/
+</code></pre>
+<ol start="4">
+<li>重启Docker</li>
+</ol>
+<pre><code>systemctl restart docker
+</code></pre>
+<ul>
+<li>配置你的Harbor.yml<br>
+<img src="https://optimistic9527.github.io/images/harbor-yml.png" alt="" loading="lazy"><br>
+其它部分可按需修改-<a href="https://goharbor.io/docs/1.10/install-config/configure-yml-file/">官方配置文档</a></li>
 </ul>
 
               </div>
