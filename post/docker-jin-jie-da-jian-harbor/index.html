@@ -8,7 +8,7 @@
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
 <title>Docker进阶-搭建Harbor | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1587550097017">
+<link rel="shortcut icon" href="/favicon.ico?v=1587551202401">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -521,7 +521,7 @@ window.addEventListener('load', function() {
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>502<span class="pc-show">字数</span></span>
+      <span>522<span class="pc-show">字数</span></span>
     </span>
     
   </div>
@@ -612,9 +612,24 @@ cp ca.crt /etc/docker/certs.d/harbor.gxy.com/
 <pre><code>systemctl restart docker
 </code></pre>
 <ul>
-<li>配置你的Harbor.yml<br>
+<li>
+<p>配置你的Harbor.yml<br>
 <img src="https://optimistic9527.github.io/images/harbor-yml.png" alt="" loading="lazy"><br>
-其它部分可按需修改-<a href="https://goharbor.io/docs/1.10/install-config/configure-yml-file/">官方配置文档</a></li>
+其它部分可按需修改-<a href="https://goharbor.io/docs/1.10/install-config/configure-yml-file/">官方配置文档</a></p>
+</li>
+<li>
+<p>启动Harbor</p>
+</li>
+</ul>
+<pre><code>sh ./install.sh --with-notary
+</code></pre>
+<ul>
+<li>
+<p>配置本地证书</p>
+</li>
+<li>
+<p>用https访问你的Harbor</p>
+</li>
 </ul>
 
               </div>
