@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>计算机组成原理回顾-中断系统 | Optimistic9527</title>
+<title>Docker进阶-搭建Harbor | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1587548008864">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="计算机组成原理回顾-中断系统" />
-    <meta name="keywords" content="计算机组成原理,计算机,计算机基础知识" />
+    <meta name="description" content="Docker进阶-搭建Harbor" />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -231,8 +231,8 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">中断的基本概念</a></li>
-<li><a href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%88%86%E7%B1%BB">中断的分类</a></li>
+<li><a href="#harbor%E4%BB%8B%E7%BB%8D">Harbor介绍</a></li>
+<li><a href="#harbor%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B">Harbor搭建流程</a></li>
 </ul>
 </li>
 </ul>
@@ -501,8 +501,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhong-duan-xi-tong/">
-      计算机组成原理回顾-中断系统
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/docker-jin-jie-da-jian-harbor/">
+      Docker进阶-搭建Harbor
     </a>
   </h1>
   <div class="post-meta">
@@ -510,61 +510,75 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-04-18</span>
+      <span>2020-04-22</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
-      <span class="meta-item">
-        <i class="fa fa-folder-o"></i>
-        <span class="pc-show">分类于</span>
-        
-          
-            <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/">
-              <span>计算机组成原理</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/">
-              <span>计算机</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/RukXges-F/">
-              <span>计算机基础知识</span>
-            </a>
-          
-        
-      </span>
-      <span class="post-meta-divider">|</span>
-    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>2分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>259<span class="pc-show">字数</span></span>
+      <span>313<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <h3 id="中断的基本概念">中断的基本概念</h3>
+                <h3 id="harbor介绍">Harbor介绍</h3>
 <blockquote>
-<p>在计算机执行程序的过程中，当出现<code>异常情况</code>或<code>特殊请求</code>时，计算机停止<code>现行程序</code>的运行，<code>转向</code>这些异常情况或特殊请求的处理，处理结束后再<code>返回</code>到现行程序的间断处继续执行原程序，这个过程称为中断</p>
+<p>Harbor is an open source trusted cloud native registry project that stores, signs, and scans content. Harbor extends the open source Docker Distribution by adding the functionalities usually required by users such as security, identity and management. Having a registry closer to the build and run environment can improve the image transfer efficiency. Harbor supports replication of images between registries, and also offers advanced security features such as user management, access control and activity auditing.</p>
 </blockquote>
-<h3 id="中断的分类">中断的分类</h3>
-<pre><code>- **中断源**的不通
-    - **内中断**:程序运行错误引起的中断,如缺叶中断，除数为0，越界错误，存取好保护错误，非法指令，特权指令，运行超时，等待超时，算术运算错误
-    - **外中断**:即由外部设备，接口引起的中断
-- CPU能不能限制某些中断发生
-    - **可屏蔽中断**：被CPU通过指令限制某些设备发出中断请求的中断
-        - CPU关中断：CPU不响应中断
-        - **中断屏蔽字**：CPU只响应`优先级最高`的中断
-- **不可屏蔽中断**:不允许屏蔽的中断，如电源掉电</code></pre>
+<h3 id="harbor搭建流程">Harbor搭建流程</h3>
+<blockquote>
+<p>配置HTTPS(没有第三方的证书，自己创建证书可以用在测试与开发环境,测试域名使用<code>harbor.gxy.com</code>)</p>
+</blockquote>
+<ul>
+<li>下载<a href="https://github.com/goharbor/harbor/releases">Harbor releases page</a></li>
+<li>解压下载下来的文件夹 <code>tar xvf harbor-offline-installer-v1.10.2.tgz</code></li>
+<li>生成证书颁发机构证书</li>
+</ul>
+<ol>
+<li>生成CA证书的私钥:</li>
+</ol>
+<pre><code>openssl genrsa -out ca.key 4096
+</code></pre>
+<ol start="2">
+<li>生成CA证书:</li>
+</ol>
+<pre><code>openssl req -x509 -new -nodes -sha512 -days 3650 -subj &quot;/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=harbor.gxy.com&quot; -key ca.key -out ca.crt
+</code></pre>
+<ul>
+<li>生成服务器证书</li>
+</ul>
+<ol>
+<li>生成服务器的私钥</li>
+</ol>
+<pre><code>openssl genrsa -out harbor.gxy.com.key 4096
+</code></pre>
+<ol start="2">
+<li>生成证书签名请求(CSR)</li>
+</ol>
+<pre><code>openssl req -sha512 -new  -subj &quot;/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=harbor.gxy.com&quot; -key harbor.gxy.com.key  -out harbor.gxy.com.csr
+</code></pre>
+<ol start="3">
+<li>生成一个x509 v3扩展文件</li>
+</ol>
+<pre><code>cat &gt; v3.ext &lt;&lt;-EOF
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+[alt_names]
+DNS.1=horbor.gxy.com
+EOF
+</code></pre>
+<ul>
+<li>提供证书给Harbor和Docker</li>
+</ul>
 
               </div>
               <div class="post-footer">
@@ -575,7 +589,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhong-duan-xi-tong/" title="计算机组成原理回顾-中断系统">计算机组成原理回顾-中断系统</a>
+      <a href="https://optimistic9527.github.io/post/docker-jin-jie-da-jian-harbor/" title="Docker进阶-搭建Harbor">Docker进阶-搭建Harbor</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -584,25 +598,15 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
-      <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/"># 计算机组成原理</a>
-    
-      <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/"># 计算机</a>
-    
-      <a href="https://optimistic9527.github.io/tag/RukXges-F/"># 计算机基础知识</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Docker进阶-Dockerfile" href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">Docker进阶-Dockerfile</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Docker进阶-Dockerfile" href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="计算机组成原理回顾-总线概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zong-xian-gai-shu/">计算机组成原理回顾-总线概述</a>
-        <a class="nav-mobile-next" title="计算机组成原理回顾-总线概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zong-xian-gai-shu/">下一篇</a>
+        <a class="nav-pc-next" title="Docker进阶-Dockerfile" href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">Docker进阶-Dockerfile</a>
+        <a class="nav-mobile-next" title="Docker进阶-Dockerfile" href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
