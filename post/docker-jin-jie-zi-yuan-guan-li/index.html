@@ -7,8 +7,8 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>Docker进阶-资源管理 | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1587726010656">
+<title>Docker进阶-资源限制 | Optimistic9527</title>
+<link rel="shortcut icon" href="/favicon.ico?v=1587735336419">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -27,7 +27,7 @@
 
 
 
-    <meta name="description" content="Docker进阶-资源管理" />
+    <meta name="description" content="Docker进阶-资源限制" />
     <meta name="keywords" content="Docker" />
   </head>
   <body>
@@ -233,6 +233,7 @@
 <ul>
 <li><a href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6">容器的资源限制</a></li>
 <li><a href="#%E5%AE%B9%E5%99%A8memory%E7%9A%84%E9%99%90%E5%88%B6">容器Memory的限制</a></li>
+<li><a href="#%E5%AE%B9%E5%99%A8cpu%E7%9A%84%E9%99%90%E5%88%B6">容器CPU的限制</a></li>
 </ul>
 </li>
 </ul>
@@ -502,7 +503,7 @@ window.addEventListener('load', function() {
               <header class="post-header">
   <h1 class="post-title">
     <a class="post-title-link" href="https://optimistic9527.github.io/post/docker-jin-jie-zi-yuan-guan-li/">
-      Docker进阶-资源管理
+      Docker进阶-资源限制
     </a>
   </h1>
   <div class="post-meta">
@@ -529,12 +530,12 @@ window.addEventListener('load', function() {
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>385<span class="pc-show">字数</span></span>
+      <span>532<span class="pc-show">字数</span></span>
     </span>
     
   </div>
@@ -614,6 +615,37 @@ Docker提供了通过docker cmd运行时设置配置变量来进行对容器使�
 </tr>
 </tbody>
 </table>
+<h3 id="容器cpu的限制">容器CPU的限制</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--cpus</td>
+<td>设置容器容器最多可用的CPU资源数，比如你有两核CPU，--cpu=1.5，那么这个容器就可以用1.5个CPU的资源</td>
+</tr>
+<tr>
+<td>--cpu-period</td>
+<td>CPU CFS 调度器的调度周期</td>
+</tr>
+<tr>
+<td>--cpu-quota</td>
+<td>CPU CFS调度器的quota</td>
+</tr>
+<tr>
+<td>一cpuset-cpus</td>
+<td>设置使用那个cpu核心，比如有4核(0-3)，设置0-1代表使用1，2CPU，设置1，3代表使用1，3CPU</td>
+</tr>
+<tr>
+<td>一cpu-shares</td>
+<td>设置容器的CPU利用率的一个权重，当CPU都需要CPU资源时，CPU资源会倾向与权重高的，默认是1024</td>
+</tr>
+</tbody>
+</table>
 
               </div>
               <div class="post-footer">
@@ -624,7 +656,7 @@ Docker提供了通过docker cmd运行时设置配置变量来进行对容器使�
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/docker-jin-jie-zi-yuan-guan-li/" title="Docker进阶-资源管理">Docker进阶-资源管理</a>
+      <a href="https://optimistic9527.github.io/post/docker-jin-jie-zi-yuan-guan-li/" title="Docker进阶-资源限制">Docker进阶-资源限制</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>

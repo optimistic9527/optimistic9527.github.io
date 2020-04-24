@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://optimistic9527.github.io</id>
     <title>Optimistic9527</title>
-    <updated>2020-04-24T11:00:14.152Z</updated>
+    <updated>2020-04-24T13:35:43.113Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://optimistic9527.github.io"/>
     <link rel="self" href="https://optimistic9527.github.io/atom.xml"/>
@@ -11,7 +11,7 @@
     <icon>https://optimistic9527.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Optimistic9527</rights>
     <entry>
-        <title type="html"><![CDATA[Docker进阶-资源管理]]></title>
+        <title type="html"><![CDATA[Docker进阶-资源限制]]></title>
         <id>https://optimistic9527.github.io/post/docker-jin-jie-zi-yuan-guan-li/</id>
         <link href="https://optimistic9527.github.io/post/docker-jin-jie-zi-yuan-guan-li/">
         </link>
