@@ -8,7 +8,7 @@
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
 <title>计算机组成原理回顾-IO系统 | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1587818006100">
+<link rel="shortcut icon" href="/favicon.ico?v=1587818903070">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -28,7 +28,7 @@
 
 
     <meta name="description" content="计算机组成原理回顾-IO系统" />
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="计算机组成原理,计算机,计算机基础知识" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -514,6 +514,31 @@ window.addEventListener('load', function() {
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
+      <span class="meta-item">
+        <i class="fa fa-folder-o"></i>
+        <span class="pc-show">分类于</span>
+        
+          
+            <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/">
+              <span>计算机组成原理</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/">
+              <span>计算机</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/RukXges-F/">
+              <span>计算机基础知识</span>
+            </a>
+          
+        
+      </span>
+      <span class="post-meta-divider">|</span>
+    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
       <span>2分钟</span>
@@ -521,7 +546,7 @@ window.addEventListener('load', function() {
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>308<span class="pc-show">字数</span></span>
+      <span>376<span class="pc-show">字数</span></span>
     </span>
     
   </div>
@@ -538,8 +563,7 @@ window.addEventListener('load', function() {
 <li><strong>程序查询方式</strong>：完全通过CPU执行IO程序来控制主机与外围设备之间的信息传递，CPU会不断的用一条测试指令检测外围设备的工作状态，一旦标记触发器完成状态，就可以进行数据传送来。CPU与IO完全<code>串行</code>，<code>效率很低</code></li>
 <li><strong>程序中断方式</strong>：利用中断机制上报自己的状态，避免CPU一直查询IO状态，通常传输的是一个字或者一个字节，会造成大量中断，影响系统。</li>
 <li><strong>DMA方式</strong>：直接存储器，数据传送阶段不需要CPU参与，由传统的<code>I/O-&gt;CPU-&gt;内存</code> 变成了<code>I/O-&gt;内存</code>，按照块进行数据传输，当一个块数传送完后，才给CPU一个中断信号<br>
--** I/O通道控制方式**:</li>
-<li><strong>IO处理机</strong></li>
+-** I/O通道控制方式**: 控制方式是DMA方式的进一步发展，让外设与主存之间直接交换数据的控制器，进一步减少了CPU的干预，是按照一组数据块进行数据传输的。(本质是一个具有特殊功能的处理器)</li>
 </ul>
 
               </div>
@@ -559,6 +583,12 @@ window.addEventListener('load', function() {
     </li>
   </ul>
   <div class="tags">
+    
+      <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/"># 计算机组成原理</a>
+    
+      <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/"># 计算机</a>
+    
+      <a href="https://optimistic9527.github.io/tag/RukXges-F/"># 计算机基础知识</a>
     
   </div>
   <div class="nav">
