@@ -8,7 +8,7 @@
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
 <title>计算机组成原理回顾-中断系统 | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1587735336419">
+<link rel="shortcut icon" href="/favicon.ico?v=1587818006100">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -233,6 +233,7 @@
 <ul>
 <li><a href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">中断的基本概念</a></li>
 <li><a href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%88%86%E7%B1%BB">中断的分类</a></li>
+<li><a href="#%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B">中断处理过程</a></li>
 </ul>
 </li>
 </ul>
@@ -546,7 +547,7 @@ window.addEventListener('load', function() {
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>259<span class="pc-show">字数</span></span>
+      <span>265<span class="pc-show">字数</span></span>
     </span>
     
   </div>
@@ -562,9 +563,11 @@ window.addEventListener('load', function() {
     - **外中断**:即由外部设备，接口引起的中断
 - CPU能不能限制某些中断发生
     - **可屏蔽中断**：被CPU通过指令限制某些设备发出中断请求的中断
-        - CPU关中断：CPU不响应中断
+        - **CPU关中断**：CPU不响应中断
         - **中断屏蔽字**：CPU只响应`优先级最高`的中断
-- **不可屏蔽中断**:不允许屏蔽的中断，如电源掉电</code></pre>
+- **不可屏蔽中断**:不允许屏蔽的中断，如电源掉电
+</code></pre>
+<h3 id="中断处理过程">中断处理过程</h3>
 
               </div>
               <div class="post-footer">

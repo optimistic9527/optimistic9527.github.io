@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>计算机组成原理回顾-指令系统 | Optimistic9527</title>
+<title>计算机组成原理回顾-IO系统 | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1587818006100">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="计算机组成原理回顾-指令系统" />
-    <meta name="keywords" content="计算机组成原理,计算机,计算机基础知识" />
+    <meta name="description" content="计算机组成原理回顾-IO系统" />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -231,9 +231,8 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E6%8C%87%E4%BB%A4%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A0%BC%E5%BC%8F">指令的基本格式</a></li>
-<li><a href="#%E6%8C%87%E4%BB%A4%E5%AF%BB%E5%9D%80">指令寻址</a></li>
-<li><a href="#%E6%95%B0%E6%8D%AE%E5%AF%BB%E5%9D%80">数据寻址</a></li>
+<li><a href="#io%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">I/O接口的基本概念</a></li>
+<li><a href="#io%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F">I/O控制方式</a></li>
 </ul>
 </li>
 </ul>
@@ -502,8 +501,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhi-ling-xi-tong/">
-      计算机组成原理回顾-指令系统
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-io-xi-tong/">
+      计算机组成原理回顾-IO系统
     </a>
   </h1>
   <div class="post-meta">
@@ -511,70 +510,36 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-04-15</span>
+      <span>2020-04-25</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
-      <span class="meta-item">
-        <i class="fa fa-folder-o"></i>
-        <span class="pc-show">分类于</span>
-        
-          
-            <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/">
-              <span>计算机组成原理</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/">
-              <span>计算机</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/RukXges-F/">
-              <span>计算机基础知识</span>
-            </a>
-          
-        
-      </span>
-      <span class="post-meta-divider">|</span>
-    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
+      <span>2分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>713<span class="pc-show">字数</span></span>
+      <span>308<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <h3 id="指令的基本格式">指令的基本格式</h3>
+                <h3 id="io接口的基本概念">I/O接口的基本概念</h3>
+<blockquote>
+<p>输入输出接口是主机和外设之间的交接界面，通过接口可以实现主机和外设之间的信息交换<br>
+<img src="https://optimistic9527.github.io/images/io%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.png" alt="" loading="lazy"></p>
+</blockquote>
+<h3 id="io控制方式">I/O控制方式</h3>
+<p>I/O控制方式指的是CPU实现与IO设备进行数据交换的方式，常用的IO控制方式有以下几种</p>
 <ul>
-<li>一条指令总体上包括两种信息即<code>操作码</code>与<code>地址码</code></li>
-<li>用来表示该指令所要完成的操作，地址码用来描述该指令操作的对象</li>
-<li>指令长度取决于操作码的长度，操作数的地址数以及操作数地址的个数</li>
-</ul>
-<h3 id="指令寻址">指令寻址</h3>
-<ul>
-<li><strong>顺序寻址</strong>：由于指令地址在内存中按顺序安排，当执行一段程序时，通常是一条指令接一条指令地顺序进行。也就是说，从存储器取出第1条指令，然后执行这条指令；接着从存储器取出第2条指令，再执行第二条指令；接着再取出第3条指令。因此，必须使用程序计数器（又称指令计数器）PC来计数指令的顺序号，该顺序号就是指令在内存中的地址。</li>
-<li><strong>跳跃寻址</strong>：当程序转移执行的顺序时，指令的寻址就采取跳跃寻址方式。所谓跳跃，是指下条指令的地址码不是由程序计数器给出，而是由本条指令给出。可以实现程序转移或构成循环程序。</li>
-</ul>
-<h3 id="数据寻址">数据寻址</h3>
-<ul>
-<li><strong>立即寻址</strong>：指令的地址字段指出的不是操作数的地址，而是操作数本身</li>
-<li><strong>直接寻址</strong>：在指令格式的地址的字段中直接指出操作数在内存的地址</li>
-<li><strong>隐含寻址</strong>：这种类型的指令，不是明显地给出操作数的地址。而是在指令中隐含着操作数的地址。例如，单地址的指令格式，就不明显地在地址字段中指出第2操作数的地址，而是规定累加寄存器AC作为第2操作数地址。指令格式明显指出的仅是第1操作数的地址D。因此，累加寄存器AC对单地址指令格式来说是隐含地址</li>
-<li><strong>间接寻址</strong>：间接寻址是相对直接寻址而言的，在间接寻址的情况下，指令地址字段中的形式地址不是操作数的真正地址，而是操作数地址的指示器，或者说此形式地址单元的内容才是操作数的有效地址</li>
-<li><strong>寄存器寻址</strong>：有效地址即寄存器编号</li>
-<li><strong>寄存器间接寻址</strong>：有效地址在寄存器中</li>
-<li><strong>基址寻址</strong>：有效地址等于指令字中的形式地址与基址寄存器的内容相加之合</li>
-<li><strong>变址寻址</strong>：有效地址等于指令字中的形式地址与变址寄存器的内容相加</li>
-<li><strong>相对寻址</strong>: 程序计数器PC的内容加上指令格式中的形式地址而形成操作数的有效地址</li>
+<li><strong>程序查询方式</strong>：完全通过CPU执行IO程序来控制主机与外围设备之间的信息传递，CPU会不断的用一条测试指令检测外围设备的工作状态，一旦标记触发器完成状态，就可以进行数据传送来。CPU与IO完全<code>串行</code>，<code>效率很低</code></li>
+<li><strong>程序中断方式</strong>：利用中断机制上报自己的状态，避免CPU一直查询IO状态，通常传输的是一个字或者一个字节，会造成大量中断，影响系统。</li>
+<li><strong>DMA方式</strong>：直接存储器，数据传送阶段不需要CPU参与，由传统的<code>I/O-&gt;CPU-&gt;内存</code> 变成了<code>I/O-&gt;内存</code>，按照块进行数据传输，当一个块数传送完后，才给CPU一个中断信号<br>
+-** I/O通道控制方式**:</li>
+<li><strong>IO处理机</strong></li>
 </ul>
 
               </div>
@@ -586,7 +551,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhi-ling-xi-tong/" title="计算机组成原理回顾-指令系统">计算机组成原理回顾-指令系统</a>
+      <a href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-io-xi-tong/" title="计算机组成原理回顾-IO系统">计算机组成原理回顾-IO系统</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -595,26 +560,12 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
-      <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/"># 计算机组成原理</a>
-    
-      <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/"># 计算机</a>
-    
-      <a href="https://optimistic9527.github.io/tag/RukXges-F/"># 计算机基础知识</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="计算机组成原理回顾-CPU功能与结构" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-cpu-gong-neng-yu-jie-gou/">计算机组成原理回顾-CPU功能与结构</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="计算机组成原理回顾-CPU功能与结构" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-cpu-gong-neng-yu-jie-gou/">上一篇</a>
-      
     </div>
     <div class="nav-next">
-      
-        <a class="nav-pc-next" title="计算机组成原理回顾-存储器的概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-cun-chu-qi-de-gai-shu/">计算机组成原理回顾-存储器的概述</a>
-        <a class="nav-mobile-next" title="计算机组成原理回顾-存储器的概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-cun-chu-qi-de-gai-shu/">下一篇</a>
-        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
