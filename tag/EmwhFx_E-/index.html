@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8"/>
+      <meta charset="UTF-8"/>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>计算机组成原理回顾-二进制运算 | Optimistic9527</title>
+<title>Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1649169418060">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,6 @@
 
 
 
-    <meta name="description" content="计算机组成原理回顾-二进制运算" />
-    <meta name="keywords" content="计算机组成原理,计算机基础知识" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -152,25 +150,10 @@
     </div>
     <div class="main-continer">
       
-      <div class="section-layout gemini ">
+      <div class="section-layout  gemini">
         <div class="section-layout-wrapper">
-          
-
-<div class="sidebar">
-  
-    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
-      
-        <div class="post-list-sidebar">
-          <div class="sidebar-title">
-            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
-            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
-          </div>
-        </div>
-      
-      <div class="sidebar-body gemini" id="sidebar_body">
-        
-          
-            
+          <div id="sidebarMeta" class="sidebar">
+    
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -221,257 +204,142 @@
 
 
 </div>
-          
-        
-      </div>
-    </div>
-  
 </div>
 <script>
-  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
-  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
-  const SLIDE_UP_IN = 'slide-up-in';
-
-  let sidebar = document.querySelector('#sidebar'),
-  tocSideBar = document.querySelector('#tocSideBar'),
-  metaSideBar = document.querySelector('#metaSideBar'),
-  postToc = document.querySelector('#post_toc'),
-  postSiteMeta = document.querySelector('#post_side_meta'),
-  sidebarTitle = document.querySelector('.sidebar-title'),
-  sidebarBody = document.querySelector('#sidebar_body');
-
-  tocSideBar && tocSideBar.addEventListener('click', (e) => {
-    toggleSidebar(e);
-  });
-
-  metaSideBar && metaSideBar.addEventListener('click', (e) => {
-    toggleSidebar(e);
-  });
-
-  function toggleSidebar(e) {
-    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
-    if (currentTitle == e.srcElement) {
-      return ;
-    }
-    let current, showElement, hideElement;
-    if (e.srcElement == metaSideBar) {
-      showElement = postSiteMeta;
-      hideElement = postToc;
-    } else if (e.srcElement == tocSideBar){
-      showElement = postToc;
-      hideElement = postSiteMeta;
-    }
-    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
-    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
-
-    window.Velocity(hideElement, 'stop');
-    window.Velocity(hideElement, 'transition.slideUpOut', {
-      display: 'none',
-      duration: 200,
-      complete: function () {
-        window.Velocity(showElement, 'transition.slideDownIn', {
-          duration: 200
-        });
+  let sidebarMeta = document.querySelector('#sidebarMeta');
+  let scheme = 'gemini';
+  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
+  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
+    document.addEventListener('scroll', function(e) {
+      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
+        sidebarWrapper.classList.add('home-sidebar-fixed')
+      } else {
+        sidebarWrapper.classList.remove('home-sidebar-fixed')
       }
-    })
-    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
-    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+    });
   }
-
-  postToc && postToc.addEventListener('transitionend', function() {
-    this.classList.remove(SLIDE_UP_IN);
-  });
-
-  if (sidebarBody) {
-    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
-      let hasFix = false;
-      let scrollEl = document.querySelector('.main-continer');
-      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
-      window.addEventListener('scroll', function(e) {
-        if (document.scrollingElement.scrollTop >= limitTop) {
-          if (!hasFix) {
-            sidebar.classList.add('sidebar-fixed');
-            hasFix = true;
-          }
-        } else {
-          if (hasFix) {
-            sidebar.classList.remove('sidebar-fixed');
-            hasFix = false;
-          }
-        }
-      });
-    }
-  }
-  
-</script>
-          <div class="section-box box-shadow-wrapper">
-            <div class="section bg-color post post-page">
-              <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-er-jin-zhi-yun-suan/">
-      计算机组成原理回顾-二进制运算
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2020-04-13</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-      <span class="meta-item">
-        <i class="fa fa-folder-o"></i>
-        <span class="pc-show">分类于</span>
+  </script>
+            <div class="section-box tag-line">
+              <div class="box-shadow-wrapper">
+                <div class="bg-color">
+                  <section class="section posts-expand">
+                    <div class="padding-wrapper">
+  <div class="tag-timeline-box">
+    <div class="tag-timeline-wrapper">
+      <div class="tag-timeline-title">
+        <h2>
+          Go
+          <small>标签</small>
+        </h2>
+      </div>
+      
         
           
-            <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/">
-              <span>计算机组成原理</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/RukXges-F/">
-              <span>计算机基础知识</span>
+            <a href="https://optimistic9527.github.io/post/golang-string-shi-xian/">
+              <div class="motion-warpper">
+                <div class="tag-post-node">
+                  <h1>
+                    04-05
+                    <small>Golang String实现</small>
+                  </h1>
+                </div>  
+              </div>
             </a>
           
         
-      </span>
-      <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>675<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-              <div class="post-body next-md-body" id="post_body">
-                <p>在进制中x进制中，x代表的是<strong>基数</strong></p>
-<p>我们计算是一个统一的公式：基数*位次幂+</p>
-<p>例如：<br>
-十进制：473=3*10<sup>0+7*10</sup>1+4*10^2<br>
-二进制：10110 = 0*2+1*2<sup>1+1*2</sup>2+0*2<sup>3+1*2</sup>4<br>
-十六进制：oxAF= F*16<sup>0+A*16</sup>1</p>
-<ul>
-<li><strong>与&amp;</strong>：遇0则0</li>
-</ul>
-<pre><code> 两位全为1，结果才为1
-    0&amp;0=0 0&amp;1=0 1&amp;0=0 1&amp;1=1
-    例如55&amp;5 即 0011 0011 &amp; 0000 0101 =0000 0001 
- 特殊用法
-    1. 清零。如果想将一个单元清零，即使全部二进制位位0，只要与一个个位都是0的数值相与，结果为0
-    2.取一个数中指定位
-    例如：设X=10101110 取X得低四位，用X&amp;0000 1111= 0000 1110即可以得到
-    发放：找一个数，对应x要取得位，该数的对应位为1，其余位为0，此数与X进行与运算可以得到X中的指定位
-</code></pre>
-<p>-** 或|**：遇1则1</p>
-<pre><code>    只要有一个位1，结果就是1
-    0|0=0 0|1=1 1|0=1 1|1=1
-    例如55&amp;5 即 0011 0011 | 0000 0101 =0011 0111
-    或运算的特殊用法
-        常用来对一个数据的某些位置1
-        例：将X=1010 0000的低四位置1 用X|0000 1111=1010 1111
-        方法：找到一个数，对应x要置1的位，概述的对应位为1，其余位为0，此数与x相或可使X中的某些位置1
-</code></pre>
-<ul>
-<li><strong>异或^</strong>：(不进位加法)相同为0，相异W为1</li>
-</ul>
-<pre><code>  两个相应位为异，则该位结果为1，否则为0
-  0^0=0 0^1=1 1^0=1 1^1=0
-  例如55&amp;5 即 0011 0011 | 0000 0101 =0011 0110
-  异或运算的特殊用途
-  1.使特定位翻转找一个数，对应X要翻转的个位，该数的对应位为1，其余位为0，此数与X对应位异或即可
-  例：X=10101110，使X低四位翻转，用X^0000 1111=1010 0001
-  2.与0异或，保留原值
-  例:X^0000 0000=1010 1110
-  3.两个变量交换
-  A=A^B B=A^B A=A^B
-</code></pre>
-<ul>
-<li><strong>取反~</strong>:1为0，0为1</li>
-</ul>
-<pre><code>对一个二进制数按位取反，即0变1，1变0
-</code></pre>
-<ul>
-<li>
-<p><strong>原码</strong>：一个整数按照绝对值大小转换成二进制数称为原码<br>
-例如 0000 1110为14的原码</p>
-</li>
-<li>
-<p><strong>反码</strong>：将二进制数按位取反，所得到的新二进制称为原二进制数的反码<br>
-例如0000 1110反码为1111 0001</p>
-</li>
-<li>
-<p><strong>补码</strong>：反码加1为补码<br>
-1111 0001+1=1111 0010</p>
-</li>
-<li>
-<p>反码的反码+1为原码<br>
-1111 0010&gt;0000 1101 +1 -&gt;0000 1110</p>
-</li>
-<li>
-<p>负数以其正值得补码形式表示</p>
-</li>
-<li>
-<p>为什么负数用补码来表示?</p>
-</li>
-</ul>
-<ol>
-<li>减法可以当加法来运算</li>
-<li>0的表示实现统一</li>
-</ol>
-
-              </div>
-              <div class="post-footer">
-  <ul class="post-copyright">
-    <li class="post-copyright-author">
-      <strong>本文作者：</strong>
-      Optimistic9527
-    </li>
-    <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-er-jin-zhi-yun-suan/" title="计算机组成原理回顾-二进制运算">计算机组成原理回顾-二进制运算</a>
-    </li>
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong>
-      本博客所有文章除特别声明外，转载请注明出处！
-    </li>
-  </ul>
-  <div class="tags">
-    
-      <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/"># 计算机组成原理</a>
-    
-      <a href="https://optimistic9527.github.io/tag/RukXges-F/"># 计算机基础知识</a>
-    
-  </div>
-  <div class="nav">
-    <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="计算机组成原理回顾-存储器的概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-cun-chu-qi-de-gai-shu/">计算机组成原理回顾-存储器的概述</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="计算机组成原理回顾-存储器的概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-cun-chu-qi-de-gai-shu/">上一篇</a>
+        
       
-    </div>
-    <div class="nav-next">
+        
       
-        <a class="nav-pc-next" title="计算机组成原理回顾-系统概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-xi-tong-gai-shu/">计算机组成原理回顾-系统概述</a>
-        <a class="nav-mobile-next" title="计算机组成原理回顾-系统概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-xi-tong-gai-shu/">下一篇</a>
-        <i class="fa fa-chevron-right"></i>
+        
+          
+        
+          
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
       
     </div>
   </div>
 </div>
-              
-  
-
-            </div>
+                  </section>
+                </div>
+              </div>
           </div>
         </div>
       </div>
@@ -645,36 +513,6 @@
   // 代码高亮
   hljs.initHighlightingOnLoad();
 
-</script>
-      <div class="light-box" id="light_box"></div>
-<script>
-  let imgs = document.querySelectorAll('.post-body img');
-  let lightBox = document.querySelector('#light_box');
-  lightBox.addEventListener('mousedown', (e) => {
-    e.preventDefault()
-  })
-  lightBox.addEventListener('mousewheel', (e) => {
-    e.preventDefault()
-  })
-  let width = window.innerWidth * 0.8;
-  lightBox.onclick= () => {
-    let img = lightBox.querySelector('img');
-    lightBox.style = '';
-    img && img.remove();
-  }
-  imgs.forEach(item => {
-    item.onclick = function(e) {
-      let lightImg = document.createElement('img');
-      lightImg.src = this.src;
-      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
-      lightImg.style = `width: ${width}px; border: 1px solid #fff; border-radius: 2px;`;
-      lightImg.onclick = function() {
-        lightBox.style = '';
-        this.remove();
-      }
-      lightBox.append(lightImg);
-    }
-  })
 </script>
     </div>
   </body>
