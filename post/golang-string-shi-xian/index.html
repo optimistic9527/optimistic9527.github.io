@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>计算机组成原理回顾-二进制运算 | Optimistic9527</title>
+<title>Golang String实现 | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1649168591430">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="计算机组成原理回顾-二进制运算" />
-    <meta name="keywords" content="计算机组成原理,计算机基础知识" />
+    <meta name="description" content="Golang String实现" />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -170,7 +170,8 @@
       <div class="sidebar-body gemini" id="sidebar_body">
         
           
-            
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -221,6 +222,201 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto" id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%AD%E5%8F%AA%E6%9C%890%E8%B7%9F1%E5%A6%82%E4%BD%95%E8%A1%A8%E7%A4%BA%E5%AD%97%E7%AC%A6">计算机中只有0跟1如何表示字符？</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E9%9B%86%E5%A6%82%E4%BD%95%E8%A1%A8%E7%A4%BA%E5%87%BA%E4%B8%96%E7%95%8C%E4%B8%8A%E6%89%80%E6%9C%89%E7%9A%84%E5%AD%97%E7%AC%A6">字符集如何表示出世界上所有的字符？</a></li>
+<li><a href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%A6%82%E4%BD%95%E8%AF%86%E5%88%AB%E8%BF%99%E4%BA%9B%E5%AD%97%E7%AC%A6%E9%9B%86">编程语言如何识别这些字符集？</a>
+<ul>
+<li><a href="#%E5%AD%97%E7%AC%A6%E8%BE%B9%E7%95%8C%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86">字符边界如何处理？</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%AE%9A%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E6%B5%AA%E8%B4%B9%E9%97%AE%E9%A2%98">如何解决定常情况下的内存浪费问题？</a></li>
+<li><a href="#golang%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84">golang的存储结构</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1; 
+let active = 'active-show', activeClass = 'active-current';
+let tocWrapper = document.querySelector('#toc_wrapper');
+let tocContent = tocWrapper.children[0];
+let autoNumber = tocWrapper&&tocWrapper.classList.contains('auto-number');
+
+function addTocNumber(elem, deep) {
+  if (!elem) {
+    return;
+  }
+  let prop = elem.__proto__;
+
+  if (prop === HTMLUListElement.prototype) {
+    for (let i = 0; i < elem.children.length; i++) {
+      addTocNumber(elem.children[i], deep + (i + 1) + '.');
+    }
+  } else if (prop === HTMLLIElement.prototype) {
+    // 保存li元素
+    if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+      lList.push(elem);
+    }
+    for (let i = 0; i < elem.children.length; i++) {
+      let cur = elem.children[i];
+      if (cur.__proto__ === HTMLAnchorElement.prototype) {
+        if (autoNumber) {
+          cur.text =  deep + ' ' + cur.text;
+        }
+      } else if (cur.__proto__ === HTMLUListElement.prototype) {
+        addTocNumber(cur, deep);
+      }
+    }
+  }
+}
+
+function removeParentActiveClass() {
+  let parents = tocContent.querySelectorAll('.'+active)
+  parents.forEach(function(elem) {
+    elem.classList.remove(active);
+  });
+}
+
+function addActiveClass(index) {
+  if (index >= 0 && index < hList.length) {
+    lList[index].classList.add(activeClass);
+  }
+}
+
+function removeActiveClass(index) {
+  if (index >= 0 && index < hList.length) {
+    lList[index].classList.remove(activeClass);
+  }
+}
+
+function addActiveLiElemment(elem, parent) {
+  if (!elem || elem === parent) {
+    return;
+  } else {
+    if (elem.__proto__ === HTMLLIElement.prototype) {
+      elem.classList.add(active);
+    }
+    addActiveLiElemment(elem.parentElement, parent);
+  }
+}
+
+function showToc() {
+  if (tocWrapper) {
+    postBody = document.querySelector('#post_body');
+    for (let i = 0; i < postBody.children.length; i++) {
+      if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+        hList.push(postBody.children[i]);
+      }
+    }
+    if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+    } else if (tocWrapper.classList.contains('no_compress')){
+      tocContent.classList.add('expanded');
+    } else {
+      if (hList.length > 10) {
+        active = 'active-hidden'
+        tocContent.classList.add('closed');
+      } else {
+        tocContent.classList.add('expanded');
+      }
+    }
+  }
+}
+
+(function() {
+  // 处理不是从#一级标题开始目录
+  if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+    let con = tocContent.children[0].children[0];
+    tocContent.innerHTML = con.innerHTML;
+  }
+  let markdownItTOC = document.querySelector('.markdownIt-TOC');
+  let innerHeight = window.innerHeight;
+  markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+  addTocNumber(tocContent, '');
+})();
+
+document.addEventListener('scroll', function(e) {
+  if (lList.length <= 0) {
+    return;
+  }
+  let scrollTop = document.scrollingElement.scrollTop + 10;
+  let dir;
+
+  if (lastTop - scrollTop > 0) {
+    dir = 'up';
+  } else {
+    dir = 'down';
+  }
+
+  lastTop = scrollTop;
+  if (scrollTop <= 0) {
+    if (lastIndex >= 0 && lastIndex < hList.length) {
+      lList[lastIndex].classList.remove(activeClass);
+    }
+    return;
+  }
+
+  let current = 0, hasFind = false;
+  for (let i = 0; i < hList.length; i++) {
+    if (hList[i].offsetTop > scrollTop) {
+      current = i;
+      hasFind = true;
+      break;
+    }
+  }
+  if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+    current = hList.length - 1;
+  } else {
+    current--;
+  }
+  if (dir === 'down') {
+    if (current > lastIndex) {
+      addActiveClass(current);
+      removeActiveClass(lastIndex) 
+      lastIndex = current;
+      removeParentActiveClass();
+      lList[current] && addActiveLiElemment(lList[current].parentElement,tocContent);
+    }
+  } else {
+    if (current < lastIndex) {
+      addActiveClass(current);
+      removeActiveClass(lastIndex);
+      lastIndex = current;
+      removeParentActiveClass();
+      lList[current] && addActiveLiElemment(lList[current].parentElement,tocContent);
+    }
+  }
+});
+
+window.addEventListener('load', function() {
+  showToc();
+  document.querySelector('#sidebar').style='display: block;';
+  tocWrapper.classList.add('toc-active');
+  setTimeout(function() {
+    if ("createEvent" in document) {
+      let evt = document.createEvent("HTMLEvents");
+      evt.initEvent("scroll", false, true);
+      document.dispatchEvent(evt);
+    }
+    else {
+      document.fireEvent("scroll");
+    }
+  }, 500)
+})
+
+</script>
+            </div>
           
         
       </div>
@@ -308,8 +504,8 @@
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-er-jin-zhi-yun-suan/">
-      计算机组成原理回顾-二进制运算
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/golang-string-shi-xian/">
+      Golang String实现
     </a>
   </h1>
   <div class="post-meta">
@@ -317,116 +513,167 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-04-13</span>
+      <span>2022-04-05</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
-      <span class="meta-item">
-        <i class="fa fa-folder-o"></i>
-        <span class="pc-show">分类于</span>
-        
-          
-            <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/">
-              <span>计算机组成原理</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/RukXges-F/">
-              <span>计算机基础知识</span>
-            </a>
-          
-        
-      </span>
-      <span class="post-meta-divider">|</span>
-    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
+      <span>2分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>675<span class="pc-show">字数</span></span>
+      <span>464<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <p>在进制中x进制中，x代表的是<strong>基数</strong></p>
-<p>我们计算是一个统一的公式：基数*位次幂+</p>
-<p>例如：<br>
-十进制：473=3*10<sup>0+7*10</sup>1+4*10^2<br>
-二进制：10110 = 0*2+1*2<sup>1+1*2</sup>2+0*2<sup>3+1*2</sup>4<br>
-十六进制：oxAF= F*16<sup>0+A*16</sup>1</p>
+                <h2 id="计算机中只有0跟1如何表示字符">计算机中只有0跟1如何表示字符？</h2>
+<p>我们知道计算机世界中只有0跟1，如果我想表达出 <code>hello霜</code>，计算机如何表示出来，这个时候就需要使用到字符集(<strong>数字与字符的对照表</strong>)了。</p>
+<h2 id="字符集如何表示出世界上所有的字符">字符集如何表示出世界上所有的字符？</h2>
+<p>最早的字符集<a href="https://baike.baidu.com/item/ASCII/309296">ASCII</a>字符集只有128个字符集.显然无法表示出汉字，后来就又出来了GB3212编码，GBK等各种编码。为了全球统一可以表示出所有的字符，以及满足为来的扩展，就制定了<a href="https://baike.baidu.com/item/%E7%BB%9F%E4%B8%80%E7%A0%81?fromtitle=Unicode&amp;fromid=750500">Unicode</a>字符集.</p>
+<h2 id="编程语言如何识别这些字符集">编程语言如何识别这些字符集？</h2>
+<p>首先我们的想法是，按照字符集的编码照搬，如 <code>hello霜</code>会出现如下情况</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th>二进制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">h</td>
+<td>0110 1000</td>
+</tr>
+<tr>
+<td style="text-align:center">e</td>
+<td>0110 0101</td>
+</tr>
+<tr>
+<td style="text-align:center">l</td>
+<td>0110 1100</td>
+</tr>
+<tr>
+<td style="text-align:center">l</td>
+<td>0110 1100</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td>0110 1111</td>
+</tr>
+<tr>
+<td style="text-align:center">霜</td>
+<td>10010111 00011100</td>
+</tr>
+</tbody>
+</table>
+<p>01101000011001010110110001101100011011111001011100011100</p>
+<p>如果计算机这样如上面这样存储，编程语言就懵了，我这咋哪里知道在哪里进行分割处理？</p>
+<h3 id="字符边界如何处理">字符边界如何处理？</h3>
 <ul>
-<li><strong>与&amp;</strong>：遇0则0</li>
+<li>定长编码<br>
+不管字符在unicode编码集中多大，都按照最大处理，如 <code>hello霜</code>就这样</li>
 </ul>
-<pre><code> 两位全为1，结果才为1
-    0&amp;0=0 0&amp;1=0 1&amp;0=0 1&amp;1=1
-    例如55&amp;5 即 0011 0011 &amp; 0000 0101 =0000 0001 
- 特殊用法
-    1. 清零。如果想将一个单元清零，即使全部二进制位位0，只要与一个个位都是0的数值相与，结果为0
-    2.取一个数中指定位
-    例如：设X=10101110 取X得低四位，用X&amp;0000 1111= 0000 1110即可以得到
-    发放：找一个数，对应x要取得位，该数的对应位为1，其余位为0，此数与X进行与运算可以得到X中的指定位
-</code></pre>
-<p>-** 或|**：遇1则1</p>
-<pre><code>    只要有一个位1，结果就是1
-    0|0=0 0|1=1 1|0=1 1|1=1
-    例如55&amp;5 即 0011 0011 | 0000 0101 =0011 0111
-    或运算的特殊用法
-        常用来对一个数据的某些位置1
-        例：将X=1010 0000的低四位置1 用X|0000 1111=1010 1111
-        方法：找到一个数，对应x要置1的位，概述的对应位为1，其余位为0，此数与x相或可使X中的某些位置1
-</code></pre>
-<ul>
-<li><strong>异或^</strong>：(不进位加法)相同为0，相异W为1</li>
-</ul>
-<pre><code>  两个相应位为异，则该位结果为1，否则为0
-  0^0=0 0^1=1 1^0=1 1^1=0
-  例如55&amp;5 即 0011 0011 | 0000 0101 =0011 0110
-  异或运算的特殊用途
-  1.使特定位翻转找一个数，对应X要翻转的个位，该数的对应位为1，其余位为0，此数与X对应位异或即可
-  例：X=10101110，使X低四位翻转，用X^0000 1111=1010 0001
-  2.与0异或，保留原值
-  例:X^0000 0000=1010 1110
-  3.两个变量交换
-  A=A^B B=A^B A=A^B
-</code></pre>
-<ul>
-<li><strong>取反~</strong>:1为0，0为1</li>
-</ul>
-<pre><code>对一个二进制数按位取反，即0变1，1变0
-</code></pre>
-<ul>
-<li>
-<p><strong>原码</strong>：一个整数按照绝对值大小转换成二进制数称为原码<br>
-例如 0000 1110为14的原码</p>
-</li>
-<li>
-<p><strong>反码</strong>：将二进制数按位取反，所得到的新二进制称为原二进制数的反码<br>
-例如0000 1110反码为1111 0001</p>
-</li>
-<li>
-<p><strong>补码</strong>：反码加1为补码<br>
-1111 0001+1=1111 0010</p>
-</li>
-<li>
-<p>反码的反码+1为原码<br>
-1111 0010&gt;0000 1101 +1 -&gt;0000 1110</p>
-</li>
-<li>
-<p>负数以其正值得补码形式表示</p>
-</li>
-<li>
-<p>为什么负数用补码来表示?</p>
-</li>
-</ul>
-<ol>
-<li>减法可以当加法来运算</li>
-<li>0的表示实现统一</li>
-</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th>二进制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">h</td>
+<td>00000000 00000000 00000000 01101000</td>
+</tr>
+<tr>
+<td style="text-align:center">e</td>
+<td>00000000 00000000 00000000 01100101</td>
+</tr>
+<tr>
+<td style="text-align:center">l</td>
+<td>00000000 00000000 00000000 01101100</td>
+</tr>
+<tr>
+<td style="text-align:center">l</td>
+<td>00000000 00000000 00000000 01101100</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td>00000000 00000000 00000000 01101111</td>
+</tr>
+<tr>
+<td style="text-align:center">霜</td>
+<td>00000000 00000000 10010111 00011100</td>
+</tr>
+</tbody>
+</table>
+<p>这样不错，解决了字符边界的问题，但是有没有发现这样特别<strong>浪费内存</strong>？所有的字符都要四个字节来进行存储，内存伤不起呀。</p>
+<h3 id="如何解决定常情况下的内存浪费问题">如何解决定常情况下的内存浪费问题？</h3>
+<p>那就变长编码(已UTF8编码为例子)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">编码范围</th>
+<th>编码模版</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">[0,127]</td>
+<td>0xxxxxxx</td>
+</tr>
+<tr>
+<td style="text-align:center">[128,2047]</td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td style="text-align:center">[2048,65535]</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th>二进制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">h</td>
+<td>01101000</td>
+</tr>
+<tr>
+<td style="text-align:center">e</td>
+<td>01100101</td>
+</tr>
+<tr>
+<td style="text-align:center">l</td>
+<td>01101100</td>
+</tr>
+<tr>
+<td style="text-align:center">l</td>
+<td>01101100</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td>01101111</td>
+</tr>
+<tr>
+<td style="text-align:center">霜</td>
+<td>11101001 10011100 10011100</td>
+</tr>
+</tbody>
+</table>
+<p>0110100001100101011011000110110001101111111010011001110010011100</p>
+<p>golang输出如下</p>
+<figure data-type="image" tabindex="1"><img src="https://optimistic9527.github.io/post-images/1649168527566.png" alt="" loading="lazy"></figure>
+<h3 id="golang的存储结构">golang的存储结构</h3>
 
               </div>
               <div class="post-footer">
@@ -437,7 +684,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-er-jin-zhi-yun-suan/" title="计算机组成原理回顾-二进制运算">计算机组成原理回顾-二进制运算</a>
+      <a href="https://optimistic9527.github.io/post/golang-string-shi-xian/" title="Golang String实现">Golang String实现</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -446,23 +693,15 @@
   </ul>
   <div class="tags">
     
-      <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/"># 计算机组成原理</a>
-    
-      <a href="https://optimistic9527.github.io/tag/RukXges-F/"># 计算机基础知识</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="计算机组成原理回顾-存储器的概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-cun-chu-qi-de-gai-shu/">计算机组成原理回顾-存储器的概述</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="计算机组成原理回顾-存储器的概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-cun-chu-qi-de-gai-shu/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="计算机组成原理回顾-系统概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-xi-tong-gai-shu/">计算机组成原理回顾-系统概述</a>
-        <a class="nav-mobile-next" title="计算机组成原理回顾-系统概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-xi-tong-gai-shu/">下一篇</a>
+        <a class="nav-pc-next" title="k8s 核心概念" href="https://optimistic9527.github.io/post/k8s-he-xin-gai-nian/">k8s 核心概念</a>
+        <a class="nav-mobile-next" title="k8s 核心概念" href="https://optimistic9527.github.io/post/k8s-he-xin-gai-nian/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
