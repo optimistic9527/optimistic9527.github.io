@@ -8,7 +8,7 @@
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
 <title>Golang String实现 | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1649170637279">
+<link rel="shortcut icon" href="/favicon.ico?v=1649238188008">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -514,12 +514,6 @@ window.addEventListener('load', function() {
   </h1>
   <div class="post-meta">
     
-      <span class="meta-item">
-        <i class="fa fa-thumb-tack"></i>
-        <span>置顶</span>
-        <span class="post-meta-divider">|</span>
-      </span>
-    
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
@@ -542,21 +536,21 @@ window.addEventListener('load', function() {
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
+      <span>4分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>464<span class="pc-show">字数</span></span>
+      <span>897<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
                 <h3 id="计算机中只有0跟1如何表示字符">计算机中只有0跟1如何表示字符？</h3>
-<p>我们知道计算机世界中只有0跟1，如果我想表达出 <code>hello霜</code>，计算机如何表示出来，这个时候就需要使用到字符集(<strong>数字与字符的对照表</strong>)了。</p>
+<p>我们知道计算机世界中只有0跟1，如果我想表达出 <code>hello霜</code>，计算机如何表示出来，这个时候就需要使用到<a href="https://baike.baidu.com/item/%E5%AD%97%E7%AC%A6%E9%9B%86/946585?fr=aladdin">字符集</a>了。</p>
 <h3 id="字符集如何表示出世界上所有的字符">字符集如何表示出世界上所有的字符？</h3>
-<p>最早的字符集<a href="https://baike.baidu.com/item/ASCII/309296">ASCII</a>字符集只有128个字符集.显然无法表示出汉字，后来就又出来了GB3212编码，GBK等各种编码。为了全球统一可以表示出所有的字符，以及满足为来的扩展，就制定了<a href="https://baike.baidu.com/item/%E7%BB%9F%E4%B8%80%E7%A0%81?fromtitle=Unicode&amp;fromid=750500">Unicode</a>字符集.</p>
+<p>最早的字符集<a href="https://baike.baidu.com/item/ASCII/309296">ASCII</a>字符集只有128个字符集.显然无法表示出汉字，后来就又出来了GB3212编码，GBK等各种编码。为了全球统一可以表示出所有的字符，以及满足未来的扩展，就制定了<a href="https://baike.baidu.com/item/%E7%BB%9F%E4%B8%80%E7%A0%81?fromtitle=Unicode&amp;fromid=750500">Unicode</a>字符集.</p>
 <h3 id="编程语言如何识别这些字符集">编程语言如何识别这些字符集？</h3>
 <p>首先我们的想法是，按照字符集的编码照搬，如 <code>hello霜</code>会出现如下情况</p>
 <table>
@@ -594,12 +588,9 @@ window.addEventListener('load', function() {
 </tbody>
 </table>
 <p>01101000011001010110110001101100011011111001011100011100</p>
-<p>如果计算机这样如上面这样存储，编程语言就懵了，我这咋哪里知道在哪里进行分割处理？</p>
 <h4 id="字符边界如何处理">字符边界如何处理？</h4>
-<ul>
-<li>定长编码<br>
-不管字符在unicode编码集中多大，都按照最大处理，如 <code>hello霜</code>就这样</li>
-</ul>
+<p>如果计算机这样如上面这样存储，编程语言就懵了，都是01我这咋哪里知道在哪里进行分割处理？</p>
+<p>那通过<strong>定长编码</strong>不管字符在unicode编码集中多大，都按照最大处理，如 <code>hello霜</code>就这样</p>
 <table>
 <thead>
 <tr>
@@ -634,7 +625,7 @@ window.addEventListener('load', function() {
 </tr>
 </tbody>
 </table>
-<p>这样不错，解决了字符边界的问题，但是有没有发现这样特别<strong>浪费内存</strong>？所有的字符都要四个字节来进行存储，内存伤不起呀。</p>
+<p>这样不错，解决了字符边界的问题，但是有没有发现这样特别<strong>浪费内存</strong>？所有的字符都要四个字节来进行存储，内存伤不起呀(网络提供商狂喜，数据传输需要更多带宽了，都给我给钱)，的想办法节约一下。</p>
 <h4 id="如何解决定常情况下的内存浪费问题">如何解决定常情况下的内存浪费问题？</h4>
 <p>那就变长编码(已UTF8编码为例子)</p>
 <table>
@@ -642,61 +633,116 @@ window.addEventListener('load', function() {
 <tr>
 <th style="text-align:center">编码范围</th>
 <th>编码模版</th>
+<th>解释</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">[0,127]</td>
 <td>0xxxxxxx</td>
+<td>0-127,2^7内的就占用一个字节,并且首位bit一定是0</td>
 </tr>
 <tr>
 <td style="text-align:center">[128,2047]</td>
 <td>110xxxxx 10xxxxxx</td>
+<td>128,2047,2^11内的就占用2个字节，并且第一个字节的前三位bit是110,第二个字节的前两位bit是10</td>
 </tr>
 <tr>
 <td style="text-align:center">[2048,65535]</td>
 <td>1110xxxx 10xxxxxx 10xxxxxx</td>
+<td>2048,65535,2^16内的就占用3个字节，并且第一个字节的前四位bit是1110,第二个字节的前两位bit是10,第三个字节的前两位bit是10</td>
+</tr>
+<tr>
+<td style="text-align:center">....</td>
+<td>...</td>
+<td>依次类推</td>
 </tr>
 </tbody>
 </table>
+<p>那么我们按照上面的编程编码，重新看看 <code>hello霜</code> 就得到如下的字节</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:center">字符</th>
+<th>编码范围</th>
+<th>匹配模版</th>
 <th>二进制</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">h</td>
+<td>[0,127]</td>
+<td>0xxxxxxx</td>
 <td>01101000</td>
 </tr>
 <tr>
 <td style="text-align:center">e</td>
+<td>[0,127]</td>
+<td>0xxxxxxx</td>
 <td>01100101</td>
 </tr>
 <tr>
 <td style="text-align:center">l</td>
+<td>[0,127]</td>
+<td>0xxxxxxx</td>
 <td>01101100</td>
 </tr>
 <tr>
 <td style="text-align:center">l</td>
+<td>[0,127]</td>
+<td>0xxxxxxx</td>
 <td>01101100</td>
 </tr>
 <tr>
 <td style="text-align:center">0</td>
+<td>[0,127]</td>
+<td>0xxxxxxx</td>
 <td>01101111</td>
 </tr>
 <tr>
 <td style="text-align:center">霜</td>
+<td>[2048,65535]</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
 <td>11101001 10011100 10011100</td>
 </tr>
 </tbody>
 </table>
-<p>0110100001100101011011000110110001101111111010011001110010011100</p>
-<p>golang输出如下</p>
-<figure data-type="image" tabindex="1"><img src="https://optimistic9527.github.io/post-images/1649168527566.png" alt="" loading="lazy"></figure>
+<p>把上面得到的字节放到,golang程序中输出如下</p>
+<pre><code>func main() {
+	fmt.Println(string([]byte{0b01101000, 0b01100101, 0b01101100, 0b01101100, 0b01101111, 0b11101001, 0b10011100, 0b10011100}))
+
+}
+
+output: hello霜
+</code></pre>
 <h3 id="golang的存储结构">golang的存储结构</h3>
+<p>我们解决了字符数据存储成什么样子才能被识别，那么我怎么知道读到哪里结束？那我们一起看看golang是如何做的。</p>
+<pre><code class="language-golang">type StringHeader struct {
+   Data uintptr //字符的字节存储
+   Len  int  //存储的字节数量(也就是说在哪里结尾)
+}
+</code></pre>
+<pre><code class="language-golang">func main() {
+	//定义一个字符串 之前分析的的字节情况 01101000 01100101 01101100 01101100 01101111 11101001 10011100 10011100
+	s := &quot;hello霜&quot;
+	//通过黑科技转换成指针的底层结构
+	stringDetail := (*reflect.StringHeader)(unsafe.Pointer(&amp;s))
+	//八个字节所以期望长度是8
+	fmt.Println(stringDetail.Len == 8)
+	//那么通过一些黑科技，转换成数组
+	i := (*[8]byte)(unsafe.Pointer(stringDetail.Data))
+	//对于两种方式数组输出的内容是否一致
+	fmt.Println(*i)
+	fmt.Println([]byte(s))
+}
+
+
+output:
+true
+[104 101 108 108 111 233 156 156]
+[104 101 108 108 111 233 156 156]
+</code></pre>
 
               </div>
               <div class="post-footer">
