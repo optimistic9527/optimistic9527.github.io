@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>面向对象设计 | Optimistic9527</title>
+<title>快速排序 | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1649334383435">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,7 +27,7 @@
 
 
 
-    <meta name="description" content="面向对象设计" />
+    <meta name="description" content="快速排序" />
     <meta name="keywords" content="" />
   </head>
   <body>
@@ -231,7 +231,25 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1">如何进行面向对象设计</a></li>
+<li><a href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E6%98%AF%E4%BB%80%E4%B9%88">快速排序是什么？</a></li>
+<li><a href="#%E5%9B%BE%E8%A7%A3%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E6%A0%B8%E5%BF%83">图解快速排序核心</a>
+<ul>
+<li><a href="#%E5%8A%A8%E7%94%BB%E6%A6%82%E5%BF%B5%E5%9B%BE">动画概念图</a></li>
+<li><a href="#%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4">执行步骤</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84go%E5%AE%9E%E7%8E%B0">快速排序的go实现</a>
+<ul>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81">实现代码</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81">测试代码</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84java%E5%AE%9E%E7%8E%B0">快速排序的java实现</a>
+<ul>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81-2">实现代码</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81-2">测试代码</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -500,8 +518,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/mian-xiang-dui-xiang-she-ji/">
-      面向对象设计
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/kuai-su-pai-xu/">
+      快速排序
     </a>
   </h1>
   <div class="post-meta">
@@ -509,44 +527,205 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-06-20</span>
+      <span>2022-04-07</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
+      <span>4分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>360<span class="pc-show">字数</span></span>
+      <span>822<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <h3 id="如何进行面向对象设计">如何进行面向对象设计</h3>
-<p>面向对象分析的产出是详细的需求描述，那面向对象设计的产出就是类。在面向对象设计环节，我们将需求描述转换成具体的类的设计。</p>
+                <h3 id="快速排序是什么">快速排序是什么？</h3>
+<p>快速排序使用分治法（Divide and conquer）策略来把一个序列（list）分为较小和较大的2个子序列，然后递归地排序两个子序列。</p>
+<h3 id="图解快速排序核心">图解快速排序核心</h3>
+<h4 id="动画概念图">动画概念图</h4>
+<figure data-type="image" tabindex="1"><img src="https://optimistic9527.github.io/post-images/1649334371916.png" alt="" loading="lazy"></figure>
+<h4 id="执行步骤">执行步骤</h4>
 <ol>
-<li>把 URL、AppID、密码、时间戳拼接为一个字符串；</li>
-<li>对字符串通过加密算法加密生成 token；</li>
-<li>将 token、AppID、时间戳拼接到 URL 中，形成新的 URL；</li>
-<li>解析 URL，得到 token、AppID、时间戳等信息；</li>
-<li>从存储中取出 AppID 和对应的密码；</li>
-<li>根据时间戳判断 token 是否过期失效；</li>
-<li>验证两个 token 是否匹配；</li>
+<li>
+<p>选择一个基准点,并保存起来，这个时候左边就会有一个空位存放小于基准点的值</p>
+</li>
+<li>
+<p>定义两个索引点i与j</p>
+</li>
+<li>
+<p>从右往左遍历，如果j所在的元素大于基准值j左移，如果小于等于基准值就把当前的值放在i这个空位上。如果i!=j,执行步骤4,否则执行步骤5</p>
+</li>
+<li>
+<p>从左往右遍历，如果j所在的元素小于基准值i右移，如果大于等于基准值就把当前的值放在j空位上。如果i!=j,执行步骤3,否则执行步骤5</p>
+</li>
+<li>
+<p>i==j了,把之前存的基准值放在空位上</p>
+</li>
+<li>
+<p>左边的数组，跟右边的数组分别再排序</p>
+<figure data-type="image" tabindex="2"><img src="http://assets.processon.com/chart_image/624d8309079129641e427f9e.png" alt="" loading="lazy"></figure>
+</li>
 </ol>
-<ul>
-<li><strong>划分指责进而识别出又哪些类</strong><br>
-根据需求描述，我们把其中涉及到的功能点，一个一个罗列出来，然后再去看哪些功能点指责相近，操作相同的属性，可否归为同一个类。</li>
-<li><strong>定义类及其属性和方法</strong><br>
-我们识别出需求描述中的动词，作为候选饿的方法，再进一步过滤塞选出真正的方法，把功能点中涉及的名词，作为候选属性，然后同样再进行过滤筛选。</li>
-<li><strong>定义类与类之间的交互关系</strong><br>
-定义类之间的关系，泛化，实现，组合，依赖</li>
-<li><strong>将类组装起来并提供执行入口</strong><br>
-我们将类组装在一起，提供一个执行入口</li>
-</ul>
+<h3 id="快速排序的go实现">快速排序的go实现</h3>
+<h4 id="实现代码">实现代码</h4>
+<pre><code class="language-go">//QuickSort 快速排序.
+func QuickSort(nums []int) {
+	partition(nums, 0, len(nums)-1)
+}
+
+func partition(nums []int, start, end int) {
+	//如果start都大于或者等于end了就返回
+	if start &gt;= end {
+		return
+	}
+	//选取基准index
+	pivot := nums[start]
+	//定义左右两个索引
+	left := start
+	right := end
+	for left != right {
+		//从右往左遍历，如果j所在的元素大于基准值j左移，如果小于等于基准值就把当前的值放在i这个空位上。
+		for left != right {
+			if nums[right] &gt; pivot {
+				right--
+			} else {
+				swap(nums, left, right)
+				left++
+				break
+			}
+		}
+
+		//从左往右遍历，如果j所在的元素小于基准值i右移，如果大于等于基准值就把当前的值放在j空位上
+		for left != right {
+			if nums[left] &lt; pivot {
+				left++
+			} else {
+				swap(nums, left, right)
+				right--
+				break
+			}
+		}
+	}
+	//i==j了,把之前存的基准值放在空位上
+	nums[left] = pivot
+	//左边的数组，跟右边的数组分别再排序
+	partition(nums, start, left-1)
+	partition(nums, left+1, end)
+}
+
+//swap 交换两个元素
+func swap(nums []int, i, j int) {
+	tmp := nums[i]
+	nums[i] = nums[j]
+	nums[j] = tmp
+}
+</code></pre>
+<h4 id="测试代码">测试代码</h4>
+<pre><code class="language-go">func TestQuickSort(t *testing.T) {
+	ints := randInts(10, 100)
+	var testInt1 []int
+	testInt1 = append(testInt1, ints...)
+	var testInt2 []int
+	testInt2 = append(testInt2, ints...)
+	sort.Ints(testInt1)
+	QuickSort(testInt2)
+	for i := 0; i &lt; len(testInt1); i++ {
+		if testInt1[i] != testInt2[i] {
+			log.Panicln(&quot;not equal&quot;)
+		}
+	}
+}
+
+//randInts size: 产生多少个随机数，n 在什么范围内产生随机数
+func randInts(size, n int) []int {
+	ints := make([]int, 0, size)
+	for i := 0; i &lt; size; i++ {
+		ints = append(ints, rand.Intn(n))
+	}
+	return ints
+}
+</code></pre>
+<h3 id="快速排序的java实现">快速排序的java实现</h3>
+<h4 id="实现代码-2">实现代码</h4>
+<pre><code class="language-java">public class Solution {
+
+
+    public int[] quickSort(int[] nums) {
+        partition(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+    private void partition(int[] nums, int start, int end) {
+        if (start &gt;= end) {
+            return;
+        }
+        int pivotIndex = start + (int) (Math.random() * (end - start));
+        int pivot = nums[pivotIndex];
+        swap(nums, start, pivotIndex);
+
+        int left = start;
+        int right = end;
+        while (left != right) {
+            while (left &lt; right) {
+                if (nums[right] &gt; pivot) {
+                    right--;
+                } else {
+                    swap(nums, left, right);
+                    left++;
+                    break;
+                }
+            }
+
+            while (left &lt; right) {
+                if (nums[left] &lt; pivot) {
+                    left++;
+                } else {
+                    swap(nums, left, right);
+                    right--;
+                    break;
+                }
+            }
+        }
+
+        nums[left] = pivot;
+        partition(nums, start, left - 1);
+        partition(nums, left + 1, end);
+    }
+
+
+    private void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+</code></pre>
+<h4 id="测试代码-2">测试代码</h4>
+<pre><code class="language-java">
+public void testQuickSort() {
+        Solution solution = new Solution();
+        int[] ints = gennerateArray(100000, 100);
+        int[] ints1 = Arrays.copyOf(ints, ints.length);
+
+        Arrays.sort(ints);
+        solution.quickSort(ints1);
+        Assert.assertArrayEquals(ints1, ints);
+    }
+
+
+    public static int[] gennerateArray(int len, int max) {
+        int[] arr = new int[len];
+        for (int i = 0; i &lt; arr.length; i++) {
+            arr[i] = (int) (Math.random() * max);
+        }
+        return arr;
+    }
+</code></pre>
 
               </div>
               <div class="post-footer">
@@ -557,7 +736,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/mian-xiang-dui-xiang-she-ji/" title="面向对象设计">面向对象设计</a>
+      <a href="https://optimistic9527.github.io/post/kuai-su-pai-xu/" title="快速排序">快速排序</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -570,15 +749,11 @@ window.addEventListener('load', function() {
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="k8s 核心概念" href="https://optimistic9527.github.io/post/k8s-he-xin-gai-nian/">k8s 核心概念</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="k8s 核心概念" href="https://optimistic9527.github.io/post/k8s-he-xin-gai-nian/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="计算机组成原理回顾-IO系统" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-io-xi-tong/">计算机组成原理回顾-IO系统</a>
-        <a class="nav-mobile-next" title="计算机组成原理回顾-IO系统" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-io-xi-tong/">下一篇</a>
+        <a class="nav-pc-next" title="Golang String实现" href="https://optimistic9527.github.io/post/golang-string-shi-xian/">Golang String实现</a>
+        <a class="nav-mobile-next" title="Golang String实现" href="https://optimistic9527.github.io/post/golang-string-shi-xian/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
