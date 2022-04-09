@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>Gridea+github page = 专注写作的博客系统 | Optimistic9527</title>
+<title>N 叉树层序遍历 | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1649494946722">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="Gridea+github page = 专注写作的博客系统" />
-    <meta name="keywords" content="" />
+    <meta name="description" content="N 叉树层序遍历" />
+    <meta name="keywords" content="Java,算法,Go" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -231,8 +231,19 @@
 <ul>
 <li>
 <ul>
-<li><a href="#github-page">Github page</a></li>
-<li><a href="#gridea">Gridea</a></li>
+<li><a href="#%E9%A2%98%E7%9B%AE%E7%AE%80%E4%BB%8B">题目简介</a></li>
+<li><a href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90">题目分析</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF%E8%A7%A3%E6%9E%90">思路解析</a></li>
+<li><a href="#%E5%8A%A8%E7%94%BB%E8%A7%A3%E6%9E%90">动画解析</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BB%A3%E7%A0%81%E5%B1%95%E7%A4%BA">代码展示</a>
+<ul>
+<li><a href="#go%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">go代码实现</a></li>
+<li><a href="#java%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">java代码实现</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -501,8 +512,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/grideagithub-page-zhuan-zhu-xie-zuo-de-bo-ke-xi-tong/">
-      Gridea+github page = 专注写作的博客系统
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/n-cha-shu-ceng-xu-bian-li/">
+      N 叉树层序遍历
     </a>
   </h1>
   <div class="post-meta">
@@ -510,74 +521,153 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-04-11</span>
+      <span>2022-04-09</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
+      <span class="meta-item">
+        <i class="fa fa-folder-o"></i>
+        <span class="pc-show">分类于</span>
+        
+          
+            <a href="https://optimistic9527.github.io/tag/MVQxjZNHo/">
+              <span>Java</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/hE1VNgN_z/">
+              <span>算法</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/EmwhFx_E-/">
+              <span>Go</span>
+            </a>
+          
+        
+      </span>
+      <span class="post-meta-divider">|</span>
+    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>325<span class="pc-show">字数</span></span>
+      <span>523<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <!-- more -->
-<h3 id="github-page">Github page</h3>
-<blockquote>
-<p>GitHub Pages is a static site hosting service that takes HTML, CSS, and JavaScript &gt;files straight from a repository on GitHub, optionally runs the files through a &gt;build process, and publishes a website</p>
-</blockquote>
-<ul>
-<li>创建Github page
+                <h3 id="题目简介">题目简介</h3>
+<p>给定一个 N 叉树，返回其节点值的 <em>层序遍历</em> 。（即从左到右，逐层遍历）。如下图<br>
+<img src="https://optimistic9527.github.io/post-images/1649494860041.png" alt="" loading="lazy"></p>
+<h3 id="题目分析">题目分析</h3>
+<h4 id="思路解析">思路解析</h4>
 <ol>
-<li>在你github账号的右上角新建一个仓库<br>
-<img src="https://help.github.com/assets/images/help/repository/repo-create.png" alt="" loading="lazy"></li>
-<li>选择该仓库的owner<br>
-<img src="https://help.github.com/assets/images/help/repository/create-repository-owner.png" alt="" loading="lazy"></li>
-<li>输入仓库的名称和描述。因为我们是创建github page，所以你的仓库的命名必须为<user> .github.io或<organization> .github.io<br>
-<img src="https://help.github.com/assets/images/help/pages/create-repository-name-pages.png" alt="" loading="lazy"></li>
-<li>选择仓库的可见性<br>
-<img src="https://help.github.com/assets/images/help/repository/create-repository-public-private.png" alt="" loading="lazy"></li>
-<li>选择仓库是否初始化一个README<br>
-<img src="https://help.github.com/assets/images/help/repository/initialize-with-readme.png" alt="" loading="lazy"></li>
-<li>点击Create repository.</li>
+<li>把当前要遍历的层的元素放到队列中</li>
+<li>记录当前层有多少个需要遍历的元素</li>
+<li>开始遍历当前层，并把元素拥有的子节点元素也放到队列中</li>
+<li>遍历完当前层的元素后，如果队列不为空，执行步骤2</li>
 </ol>
-</li>
-<li>创建访问令牌
-<ol>
-<li>在任何页面的右上角，单击您的个人资料照片，然后单击 Settings（设置）。<br>
-<img src="https://help.github.com/assets/images/help/settings/userbar-account-settings.png" alt="" loading="lazy"></li>
-<li>在左侧边栏中，单击 Developer settings。<br>
-<img src="https://help.github.com/assets/images/help/settings/developer-settings.png" alt="" loading="lazy"></li>
-<li>在左侧边栏中，单击 Personal access tokens（个人访问令牌）。<br>
-<img src="https://help.github.com/assets/images/help/settings/personal_access_tokens_tab.png" alt="" loading="lazy"></li>
-<li>单击 Generate new token（生成新令牌）<br>
-<img src="https://help.github.com/assets/images/help/settings/generate_new_token.png" alt="" loading="lazy"></li>
-<li>给令牌一个描述性名称。<br>
-<img src="https://help.github.com/assets/images/help/settings/token_description.png" alt="" loading="lazy"></li>
-<li>选择要授予此令牌的作用域或权限。 要使用令牌从命令行访问仓库，请选择 repo（仓库）。<br>
-<img src="https://help.github.com/assets/images/help/settings/token_scopes.gif" alt="" loading="lazy"></li>
-<li>单击 Generate token（生成令牌）。<br>
-<img src="https://help.github.com/assets/images/help/settings/generate_token.png" alt="" loading="lazy"></li>
-<li>令牌复制到剪贴板。 出于安全原因，离开此页面后，您将无法再次看到令牌。<br>
-<img src="https://help.github.com/assets/images/help/settings/personal_access_tokens.png" alt="" loading="lazy"></li>
-</ol>
-</li>
-</ul>
-<h3 id="gridea"><a href="https://github.com/getgridea/gridea">Gridea</a></h3>
-<ul>
-<li>一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</li>
-<li><a href="https://gridea.dev/">download</a> Gridea</li>
-<li>根据自己的喜欢配置主题<br>
-<img src="https://optimistic9527.github.io/images/%E9%85%8D%E7%BD%AE%E4%B8%BB%E9%A2%98.png" alt="" loading="lazy"></li>
-<li>配置远程同步<br>
-<img src="https://optimistic9527.github.io/images/%E8%BF%9C%E7%A8%8B%E9%85%8D%E7%BD%AE.png" alt="" loading="lazy"></li>
-</ul>
+<h4 id="动画解析">动画解析</h4>
+<figure data-type="image" tabindex="1"><img src="https://optimistic9527.github.io/post-images/1649494774746.gif" alt="" loading="lazy"></figure>
+<h3 id="代码展示">代码展示</h3>
+<h4 id="go代码实现">go代码实现</h4>
+<pre><code class="language-go">type Node struct {
+	Val      int
+	Children []*Node
+}
+
+// 429. N 叉树的层序遍历
+//levelOrder N插树的层序遍历
+func levelOrder(root *Node) [][]int {
+	//如果直接传进来一个空就直接返回
+	result := make([][]int, 0, 0)
+	if root == nil {
+		return result
+	}
+	//定义一个队列,放入第一层元素(go里么没有队列所以用slice模拟)
+	nodes := []*Node{root}
+	for len(nodes) != 0 {
+		//记录当前层有多少个元素
+		currentSize := len(nodes)
+		//记录返回的值
+		levelValues := make([]int, 0, currentSize)
+		//只遍历当前层
+		for i := 0; i &lt; currentSize; i++ {
+			node := nodes[0]
+			if node != nil {
+				levelValues = append(levelValues, node.Val)
+				//把所有的子元素加到队列中
+				nodes = append(nodes, node.Children...)
+			}
+			//go的特殊语法，queue删除第一个元素
+			nodes = nodes[1:]
+		}
+		result = append(result, levelValues)
+	}
+	return result
+}
+</code></pre>
+<h4 id="java代码实现">java代码实现</h4>
+<pre><code class="language-java">public class Solution {
+    /**
+     * // 429. N 叉树的层序遍历
+     *
+     * @param root 跟节点
+     * @return 输出每层元素
+     */
+    public List&lt;List&lt;Integer&gt;&gt; levelOrder(Node root) {
+        LinkedList&lt;List&lt;Integer&gt;&gt; result = new LinkedList&lt;&gt;();
+        //如果直接传进来一个空就直接返回
+        if (root == null) {
+            return result;
+        }
+        //定义一个队列放入第一层元素
+        LinkedList&lt;Node&gt; nodeList = new LinkedList&lt;&gt;();
+        nodeList.add(root);
+        while (nodeList.size() != 0) {
+            //记录返回的值
+            List&lt;Integer&gt; levelList = new LinkedList&lt;&gt;();
+            //记录当前层有多少个元素
+            int currentSize = nodeList.size();
+            for (int i = 0; i &lt; currentSize; i++) {
+                //返回并删除第一个元素
+                Node pop = nodeList.pop();
+                if (pop != null) {
+                    levelList.add(pop.val);
+                    //把所有的子元素加到队列中
+                    nodeList.addAll(pop.children);
+                }
+            }
+            result.add(levelList);
+        }
+        return result;
+    }
+
+    class Node {
+        public int val;
+        public List&lt;Node&gt; children;
+
+        public Node() {
+        }
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, List&lt;Node&gt; _children) {
+            val = _val;
+            children = _children;
+        }
+    }
+}
+</code></pre>
 
               </div>
               <div class="post-footer">
@@ -588,7 +678,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/grideagithub-page-zhuan-zhu-xie-zuo-de-bo-ke-xi-tong/" title="Gridea+github page = 专注写作的博客系统">Gridea+github page = 专注写作的博客系统</a>
+      <a href="https://optimistic9527.github.io/post/n-cha-shu-ceng-xu-bian-li/" title="N 叉树层序遍历">N 叉树层序遍历</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -597,16 +687,22 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
+      <a href="https://optimistic9527.github.io/tag/MVQxjZNHo/"># Java</a>
+    
+      <a href="https://optimistic9527.github.io/tag/hE1VNgN_z/"># 算法</a>
+    
+      <a href="https://optimistic9527.github.io/tag/EmwhFx_E-/"># Go</a>
+    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="计算机组成原理回顾-系统概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-xi-tong-gai-shu/">计算机组成原理回顾-系统概述</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="计算机组成原理回顾-系统概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-xi-tong-gai-shu/">上一篇</a>
-      
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="快速排序" href="https://optimistic9527.github.io/post/kuai-su-pai-xu/">快速排序</a>
+        <a class="nav-mobile-next" title="快速排序" href="https://optimistic9527.github.io/post/kuai-su-pai-xu/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
