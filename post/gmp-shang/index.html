@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>计算机组成原理回顾-中断系统 | Optimistic9527</title>
+<title>GMP-上 | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1649663227846">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="计算机组成原理回顾-中断系统" />
-    <meta name="keywords" content="计算机组成原理,计算机,计算机基础知识" />
+    <meta name="description" content="GMP-上" />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -229,11 +229,33 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li>
+<li><a href="#os%E8%B0%83%E5%BA%A6">OS调度</a>
 <ul>
-<li><a href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">中断的基本概念</a></li>
-<li><a href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%88%86%E7%B1%BB">中断的分类</a></li>
-<li><a href="#%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B">中断处理过程</a></li>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">基本概念</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B">线程</a>
+<ul>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81">线程的状态</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F">线程的工作方式</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2">线程的上下文切换</a>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-2">基本概念</a></li>
+<li><a href="#%E7%BC%BA%E7%82%B9">缺点</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#goroutine">Goroutine</a>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-3">基本概念</a></li>
+<li><a href="#%E4%BC%98%E5%8A%BF">优势</a></li>
+<li><a href="#%E7%8A%B6%E6%80%81">状态</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2">状态切换</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB">推荐阅读</a></li>
 </ul>
 </li>
 </ul>
@@ -502,8 +524,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhong-duan-xi-tong/">
-      计算机组成原理回顾-中断系统
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/gmp-shang/">
+      GMP-上
     </a>
   </h1>
   <div class="post-meta">
@@ -511,63 +533,74 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-04-18</span>
+      <span>2022-04-11</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
-      <span class="meta-item">
-        <i class="fa fa-folder-o"></i>
-        <span class="pc-show">分类于</span>
-        
-          
-            <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/">
-              <span>计算机组成原理</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/">
-              <span>计算机</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/RukXges-F/">
-              <span>计算机基础知识</span>
-            </a>
-          
-        
-      </span>
-      <span class="post-meta-divider">|</span>
-    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>5分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>265<span class="pc-show">字数</span></span>
+      <span>1190<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <h3 id="中断的基本概念">中断的基本概念</h3>
-<blockquote>
-<p>在计算机执行程序的过程中，当出现<code>异常情况</code>或<code>特殊请求</code>时，计算机停止<code>现行程序</code>的运行，<code>转向</code>这些异常情况或特殊请求的处理，处理结束后再<code>返回</code>到现行程序的间断处继续执行原程序，这个过程称为中断</p>
-</blockquote>
-<h3 id="中断的分类">中断的分类</h3>
-<pre><code>- **中断源**的不通
-    - **内中断**:程序运行错误引起的中断,如缺叶中断，除数为0，越界错误，存取好保护错误，非法指令，特权指令，运行超时，等待超时，算术运算错误
-    - **外中断**:即由外部设备，接口引起的中断
-- CPU能不能限制某些中断发生
-    - **可屏蔽中断**：被CPU通过指令限制某些设备发出中断请求的中断
-        - **CPU关中断**：CPU不响应中断
-        - **中断屏蔽字**：CPU只响应`优先级最高`的中断
-- **不可屏蔽中断**:不允许屏蔽的中断，如电源掉电
-</code></pre>
-<h3 id="中断处理过程">中断处理过程</h3>
+                <h2 id="os调度">OS调度</h2>
+<h3 id="基本概念">基本概念</h3>
+<p><span  style="color: #5bdaed; ">以线程为调度的基本单位</span>，利用调度算法来进行明智的决策，从而减少调度延迟</p>
+<h3 id="线程">线程</h3>
+<h4 id="线程的状态">线程的状态</h4>
+<ul>
+<li><strong>Waiting</strong>: 这意味着线程已停止并等待某些事情才能继续。这可能是因为等待硬件（磁盘、网络）、操作系统（系统调用）或同步调用（原子、互斥）等原因。这些类型的延迟是性能不佳的根本原因。</li>
+<li><strong>Runable</strong>: 这意味着线程需要内核上的时间，以便它可以执行分配给它的机器指令,如果你有很多线程需要时间，那么线程必须等待更长的时间才能获得时间。此外，随着更多线程争夺时间，任何给定线程获得的单独时间都会缩短。这种类型的调度延迟也可能是导致性能不佳的原因。</li>
+<li><strong>Running</strong>: 这意味着线程已放置在核心上并正在执行其机器指令。按照每个程序希望的，应用程序正在完成相关工作。</li>
+</ul>
+<h4 id="线程的工作方式">线程的工作方式</h4>
+<ul>
+<li><strong>CPU密集型</strong>: 这项工作永远不会造成线程可能处于等待状态的情况. 这是一项不断进行计算的工作</li>
+<li><strong>IO密集型</strong>：这是导致线程进入等待状态的工作。这项工作包括通过网络请求访问资源或对操作系统进行系统调用。如我们访问数据库，进行同步事件（互斥体、原子），这会导致线程进入等待。</li>
+</ul>
+<h4 id="线程的上下文切换">线程的上下文切换</h4>
+<figure data-type="image" tabindex="1"><img src="https://github.com/optimistic9527/blog/blob/master/image/threadContextSwitch.png?raw=true" alt="" loading="lazy"></figure>
+<h5 id="基本概念-2">基本概念</h5>
+<p>在CPU核心上交换线程的物理行为称为上下文切换。发生上下文切换是在当调度程序从内核中取出一个 Executing 线程并用一个 Runnable Thread 替换它时。从运行队列中选择的线程进入 Executing 状态，被取出的线程可以移回 Runnable 状态（如果它仍然具有运行能力），或进入 Waiting 状态（如果由于 IO-Bound 类型的请求而被替换）。</p>
+<h5 id="缺点">缺点</h5>
+<p>上下文切换资源消耗严重，因为在内核上和内核外交换线程需要时间。上下文切换过程中产生的延迟量取决于不同的因素，但花费约1000到约1500纳秒的时间。硬件在平均情况下，在每个核上每纳秒执行12条指令，上下文切换可能会花费约12k到约18k条指令的延迟。本质上，您的程序在上下文切换时正在失去大量执行指令的能力</p>
+<h2 id="goroutine">Goroutine</h2>
+<h3 id="基本概念-3">基本概念</h3>
+<p>Go 语言调度器中待执行的任务，它在运行时调度器中的地位与线程在操作系统中差不多，但是它占用了更小的内存空间，也降低了上下文切换的开销。Goroutine 只存在于 Go 语言的运行时，它是 Go 语言在用户态提供的线程，作为一种粒度更细的资源调度单元，如果使用得当能够在高并发的场景下更高效地利用机器的CPU.</p>
+<h3 id="优势">优势</h3>
+<ul>
+<li>内存占用小,一个G 2KB左右，可以大量开辟Goroutine</li>
+<li>在<strong>用户层</strong>可以灵活调度,调度切换开销小</li>
+</ul>
+<h3 id="状态">状态</h3>
+<ul>
+<li>_<strong>Gidle</strong>: 刚刚被分配并且还没有被初始化</li>
+<li>_<strong>Grunnable</strong>: 没有执行代码，没有栈的所有权，存储在运行队列中</li>
+<li>_<strong>Grunning</strong>: 可以执行代码，拥有栈的所有权，被赋予了内核线程 M 和处理器 P</li>
+<li>_<strong>Gsyscall</strong>: 正在执行系统调用，拥有栈的所有权，没有执行用户代码，被赋予了内核线程 M 但是不在运行队列上</li>
+<li>_<strong>Gwaiting</strong>: 由于运行时而被阻塞，没有执行用户代码并且不在运行队列上，但是可能存在于 Channel 的等待队列上</li>
+<li>_<strong>Gdead</strong>: 没有被使用，没有执行代码，可能有分配的栈</li>
+<li>_<strong>Gcopystack</strong>: 栈正在被拷贝，没有执行代码，不在运行队列上</li>
+<li>_<strong>Gpreempted</strong>: 由于抢占而被阻塞，没有执行用户代码并且不在运行队列上，等待唤醒</li>
+<li>_<strong>Gscan</strong>: GC 正在扫描栈空间，没有执行代码，可以与其他状态同时存在</li>
+</ul>
+<h4 id="状态切换">状态切换</h4>
+<p><img src="../image/goroutine%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2.png" alt="" loading="lazy"><br>
+状态简化(跟线程是一样的)</p>
+<ul>
+<li><strong>waiting</strong>: Goroutine 正在等待某些条件满足，例如：系统调用结束等，包括 _Gwaiting、_Gsyscall 和 _Gpreempted 几个状态</li>
+<li><strong>runnable</strong>: Goroutine 已经准备就绪，可以在线程运行，如果当前程序中有非常多的 Goroutine，每个 Goroutine 就可能会等待更多的时间，即 _Grunnable</li>
+<li><strong>running</strong>: Goroutine 正在某个线程上运行，即 _Grunning</li>
+</ul>
+<h3 id="推荐阅读">推荐阅读</h3>
+<p><a href="https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html">scheduling-in-go-part</a></p>
 
               </div>
               <div class="post-footer">
@@ -578,7 +611,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zhong-duan-xi-tong/" title="计算机组成原理回顾-中断系统">计算机组成原理回顾-中断系统</a>
+      <a href="https://optimistic9527.github.io/post/gmp-shang/" title="GMP-上">GMP-上</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -587,25 +620,15 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
-      <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/"># 计算机组成原理</a>
-    
-      <a href="https://optimistic9527.github.io/tag/XyGeUU6FW/"># 计算机</a>
-    
-      <a href="https://optimistic9527.github.io/tag/RukXges-F/"># 计算机基础知识</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Docker进阶-Dockerfile" href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">Docker进阶-Dockerfile</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Docker进阶-Dockerfile" href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="计算机组成原理回顾-总线概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zong-xian-gai-shu/">计算机组成原理回顾-总线概述</a>
-        <a class="nav-mobile-next" title="计算机组成原理回顾-总线概述" href="https://optimistic9527.github.io/post/ji-suan-ji-zu-cheng-yuan-li-hui-gu-zong-xian-gai-shu/">下一篇</a>
+        <a class="nav-pc-next" title="分发饼干" href="https://optimistic9527.github.io/post/fen-fa-bing-gan/">分发饼干</a>
+        <a class="nav-mobile-next" title="分发饼干" href="https://optimistic9527.github.io/post/fen-fa-bing-gan/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>

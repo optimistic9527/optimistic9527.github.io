@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://optimistic9527.github.io</id>
     <title>Optimistic9527</title>
-    <updated>2022-04-11T07:29:17.738Z</updated>
+    <updated>2022-04-11T07:47:11.102Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://optimistic9527.github.io"/>
     <link rel="self" href="https://optimistic9527.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://optimistic9527.github.io/images/avatar.png</logo>
     <icon>https://optimistic9527.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Optimistic9527</rights>
+    <entry>
+        <title type="html"><![CDATA[GMP-上]]></title>
+        <id>https://optimistic9527.github.io/post/gmp-shang/</id>
+        <link href="https://optimistic9527.github.io/post/gmp-shang/">
+        </link>
+        <updated>2022-04-11T07:44:42.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[分发饼干]]></title>
         <id>https://optimistic9527.github.io/post/fen-fa-bing-gan/</id>
@@ -72,12 +79,5 @@
         <link href="https://optimistic9527.github.io/post/docker-jin-jie-da-jian-harbor/">
         </link>
         <updated>2020-04-22T08:03:19.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Docker进阶-Dockerfile]]></title>
-        <id>https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/</id>
-        <link href="https://optimistic9527.github.io/post/docker-jin-jie-dockerfile/">
-        </link>
-        <updated>2020-04-19T04:22:27.000Z</updated>
     </entry>
 </feed>
