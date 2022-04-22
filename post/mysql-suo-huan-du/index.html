@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>GMP-下 | Optimistic9527</title>
+<title>mysql锁-幻读 | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1650635456260">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="GMP-下" />
-    <meta name="keywords" content="GMP,Go,计算机组成原理" />
+    <meta name="description" content="mysql锁-幻读" />
+    <meta name="keywords" content="幻读,锁,mysql,数据库" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -229,32 +229,19 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#go%E8%B0%83%E5%BA%A6%E5%99%A8">Go调度器</a>
+<li>
 <ul>
-<li><a href="#%E5%8E%86%E5%8F%B2%E7%89%88%E6%9C%AC">历史版本</a></li>
-<li><a href="#%E5%8E%86%E5%8F%B2%E6%A8%A1%E5%9E%8B">历史模型</a>
+<li><a href="#mysql%E9%94%81-%E5%B9%BB%E8%AF%BB">mysql锁-幻读</a>
 <ul>
-<li><a href="#gm%E6%A8%A1%E5%9E%8B">GM模型</a>
-<ul>
-<li><a href="#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84">模型结构</a></li>
-<li><a href="#%E7%BC%BA%E7%82%B9">缺点</a></li>
+<li><a href="#%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB">锁的分类</a></li>
 </ul>
 </li>
-<li><a href="#gmp%E6%A8%A1%E5%9E%8B">GMP模型</a>
+<li><a href="#mysql%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%B9%BB%E8%AF%BB">mysql如何解决幻读</a>
 <ul>
-<li><a href="#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84-2">模型结构</a></li>
-<li><a href="#%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5">调度策略</a></li>
-<li><a href="#%E7%9B%91%E6%8E%A7%E7%BA%BF%E7%A8%8Bsysmon">监控线程sysmon</a>
-<ul>
-<li><a href="#%E6%89%A7%E8%A1%8C%E9%97%B4%E9%9A%94">执行间隔</a></li>
-<li><a href="#%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AE%B9">工作内容</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%B9%BB%E8%AF%BB">什么是幻读?</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3">如何解决</a></li>
 </ul>
 </li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E5%BC%95%E7%94%A8">引用</a></li>
 </ul>
 </li>
 </ul>
@@ -523,8 +510,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/gmp-xia/">
-      GMP-下
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/mysql-suo-huan-du/">
+      mysql锁-幻读
     </a>
   </h1>
   <div class="post-meta">
@@ -532,7 +519,7 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2022-04-11</span>
+      <span>2022-04-20</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -541,20 +528,26 @@ window.addEventListener('load', function() {
         <span class="pc-show">分类于</span>
         
           
-            <a href="https://optimistic9527.github.io/tag/S7eYTkKam/">
-              <span>GMP</span>
+            <a href="https://optimistic9527.github.io/tag/jvMtpwfL3/">
+              <span>幻读</span>
             </a>、
           
         
           
-            <a href="https://optimistic9527.github.io/tag/EmwhFx_E-/">
-              <span>Go</span>
+            <a href="https://optimistic9527.github.io/tag/cZbc1j9X7S/">
+              <span>锁</span>
             </a>、
           
         
           
-            <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/">
-              <span>计算机组成原理</span>
+            <a href="https://optimistic9527.github.io/tag/QPXUForP2/">
+              <span>mysql</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/NWdhSaxQH2/">
+              <span>数据库</span>
             </a>
           
         
@@ -563,143 +556,118 @@ window.addEventListener('load', function() {
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>5分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>1242<span class="pc-show">字数</span></span>
+      <span>786<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <h2 id="go调度器">Go调度器</h2>
-<h3 id="历史版本">历史版本</h3>
+                <h3 id="mysql锁-幻读">mysql锁-幻读</h3>
+<h4 id="锁的分类">锁的分类</h4>
 <ul>
-<li><strong>单线程调度器 0.x</strong>
+<li><strong>表级锁</strong>:
 <ul>
-<li>只包含 40 多行代码；</li>
-<li>程序中只能存在一个活跃线程，由 G-M 模型组成</li>
-</ul>
+<li><strong>特点</strong>:
+<ol>
+<li>锁的粒度大，冲突的概览就大，并发度就低。</li>
+<li>加锁开销小，加锁快</li>
+<li>不会产生死锁</li>
+</ol>
 </li>
-<li><strong>多线程调度器 1.0</strong>
+<li><strong>类型划分</strong>:
 <ul>
-<li>允许运行多线程的程序；</li>
-<li>全局锁导致竞争严重</li>
-</ul>
-</li>
-<li><strong>任务窃取调度器 1.1</strong>
-<ul>
-<li>引入了处理器 P，构成了目前的 G-M-P 模型；</li>
-<li>在处理器 P 的基础上实现了基于工作窃取的调度器；</li>
-<li>在某些情况下，Goroutine 不会让出线程，进而造成饥饿问题；</li>
-<li>时间过长的垃圾回收（Stop-the-world，STW）会导致程序长时间无法工作</li>
-</ul>
-</li>
-<li><strong>抢占式调度器 1.2-至今</strong>
-<ul>
-<li>基于协作的抢占式调度器 - 1.2 ~ 1.13</li>
-<li>通过编译器在函数调用时插入抢占检查指令，在函数调用时检查当前 Goroutine 是否发起了抢占请求，实现基于协作的抢占式调度；</li>
-<li>Goroutine 可能会因为垃圾回收和循环长时间占用资源导致程序暂停；(因为一直执行某个函数逻辑，不调用其它函数，就没办法触发抢占调度)</li>
-</ul>
-</li>
-<li><strong>基于信号的抢占式调度器 - 1.14 ~ 至今</strong>
-<ul>
-<li>于信号的真抢占式调度；</li>
-<li>垃圾回收在扫描栈时会触发抢占调度；</li>
-<li>抢占的时间点不够多，还不能覆盖全部的边缘情况；</li>
-</ul>
-</li>
-<li><strong>非均匀存储访问调度器  提案</strong>
-<ul>
-<li>对运行时的各种资源进行分区</li>
-</ul>
-</li>
-</ul>
-<h3 id="历史模型">历史模型</h3>
-<h4 id="gm模型">GM模型</h4>
-<figure data-type="image" tabindex="1"><img src="../image/gm%E6%A8%A1%E5%9E%8B.png" alt="" loading="lazy"></figure>
-<h5 id="模型结构">模型结构</h5>
-<ul>
-<li><strong>G</strong>: Goroutine</li>
-<li><strong>M</strong>: Machine(与os线程一一对应)</li>
-</ul>
-<h5 id="缺点">缺点</h5>
-<ul>
-<li>创建，销毁跟调度G都需要每个M获取到全局队列的锁，竞争非常激烈</li>
-<li>G在线程中传递问题(如一个G创建出一个新的G，新G需要放到全局队列中，被其它线程获取执行，增大了调度延迟)</li>
-<li>Per-M的内存问题,每个M都有一个cache,然而实际上只有在运行的M才需要cache，这就导致很多阻塞在系统调用的M产生了内存浪费</li>
-</ul>
-<h4 id="gmp模型">GMP模型</h4>
-<figure data-type="image" tabindex="2"><img src="../image/gmp%E6%A8%A1%E5%9E%8B.png" alt="" loading="lazy"></figure>
-<h5 id="模型结构-2">模型结构</h5>
-<ul>
-<li><strong>G</strong>: Goroutine</li>
-<li><strong>P</strong>: processor 处理器
-<ul>
-<li>数量: 默认情况下就是你CPU核心数个P(超线程下就是2倍)，可配置</li>
-<li>本地队列:
-<ul>
-<li>存放等待运行的G</li>
-<li>最多拥有256G</li>
+<li>意向共享锁(Intention Shared Locks):简称IS锁，在事务准备给数据加共享锁之前，需要去获取表的IS锁，意向共享锁之间可以互相兼容</li>
+<li>意向排它锁(Intention Exclusive Locks): 在事务准备给数据加排他锁之前，需要去获取表的IX锁，意向排他锁之间可以互相兼容 (<br>
+意向锁是由Innodb自动加的，无法干预，它存在的意义在于，当你进行锁表操作时，如果发现意向锁已经被拿了，那么你需要等到锁的释放才能进行锁表)</li>
+<li>自增锁(AUTO-INC Locks)</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><strong>M</strong>: Machine(与os线程一一对应)</li>
-<li><strong>对比GM改变</strong>
+<li><strong>行级锁</strong>:
 <ul>
-<li>把mcache移动到了P中</li>
-<li>不再是都用全局的G队列了，每个P都有自己的G队列，新的G优先放入到自己的队列中，满了后再批量放到全局队列中，优先从自己的本地队列中获取G执行</li>
-<li>实现了work stealling,当某个P的队列中没有可运行的G时，可以从全局队列，或者其它P中获取G执行</li>
-<li>当因为网络或者锁进行切换时，G与M分离，M通过调度执行新的G(异步阻塞,M可以继续执行其它任务)</li>
-<li>当因为系统调用阻塞或cgo运行一段时间后，sysmon协程会将P与M分离，由其它的M与P绑定，执行P中的G</li>
+<li><strong>特点</strong>:
+<ol>
+<li>锁的粒度小，冲突的概览就小，并发度就高。</li>
+<li>加锁开销大，加锁慢</li>
+<li>容易产生死锁</li>
+</ol>
+</li>
+<li><strong>类型划分</strong>:
+<ul>
+<li>排他锁(Exclusive Locks): 又叫做写锁，简称X锁。不能与其他事务共享，只有获得锁的事务才能对数据进行读取去修改 加锁方式 : delete/update/insert默认加上X锁，查询:select *<br>
+from xxx where id =x for update;</li>
+<li>共享锁(Shared Locks): 读锁，简称S锁。在多个事务共同对同一数据可以共享一把锁，都可以访问到数据，但是不能修改数据; 加锁方式 : select * from xxx where id =x LOCK IN<br>
+SHARE MODE</li>
+</ul>
+</li>
+<li><strong>锁的实现</strong>  :
+<ul>
+<li>记录锁(Record locks): 锁住具体的索引项，当sql执行按照唯一索引进行数据检索的时候，查询条件等值匹配的时候并且数据存在的时候，这个sql加上的就是记录锁</li>
+<li>间隙锁（Gap locks）: 锁住数据不存在的区间(左开右开),在sq执行按照索引进行数据检索的时候，查询数据不存在，这时SQL加上的锁为间隙锁，锁住了不存在的区间</li>
+<li>临键锁(Next-key locks): 等于(Record locks+Gap locks)(左开右闭(])<br>
+，当sql执行按照索引进行数据检索时，查询条件为范围查找，并有数据命中，这个sql语句加上的锁就是临键锁，锁住记录+区间（<strong>这个锁解决了幻读问题</strong>）</li>
 </ul>
 </li>
 </ul>
-<h5 id="调度策略">调度策略</h5>
-<ul>
-<li><strong>线程复用</strong>: 避免频繁的创建跟销毁线程，而是复用线程
-<ul>
-<li><strong>hand off机制</strong> : 当前的正在执行的G进行系统调用阻塞线程时，让P跟M解绑，把P转移给其它空闲的线程执行</li>
-<li><strong>work-stealing</strong>: 当某个P的队列中没有可运行的G时，可以从全局队列，或者其它P中获取G执行</li>
-<li><strong>利用并行</strong>: 最多有GOMAPXPROCS个线程分布在多个CPU上运行</li>
-<li><strong>抢占</strong>: 通过抢占式调度，一个Goroutine最多运行10ms，防止其它Goroutine饿死</li>
-<li><strong>全局G队列</strong>: 本地队列为空时候先从全局队列获取G</li>
-</ul>
 </li>
 </ul>
-<h5 id="监控线程sysmon">监控线程sysmon</h5>
-<figure data-type="image" tabindex="3"><img src="../image/sysmon.png" alt="" loading="lazy"></figure>
-<h6 id="执行间隔">执行间隔</h6>
-<ul>
-<li>初始时时20us，运行1ms后逐渐翻倍，最后时10ms运行一次</li>
-<li>抢占成功后，恢复成20us</li>
-</ul>
-<h6 id="工作内容">工作内容</h6>
-<ul>
-<li>打印调度信息：如果开启schdule trace的debug信息(例如GODEBUG=schedtrace=5000,scheddetail=1), 则按照给定的间隔打印调度信息</li>
-<li>定时从 netpoll 中获取 ready 的协程: 每sysmon tick进行一次netpoll(在STW结束和M执行查找可运行的G时也会执行netpoll)获取fd事件, 将与之相关的G放入全局runqueue</li>
-<li>调度等待执行的timer，把空闲的M和P来执行timer任务</li>
-<li>如果GC两分钟都没有运行的话，强制执行GC</li>
-<li>执行抢占
-<ul>
-<li>系统调用，P跟M进行脱离</li>
-<li>非系统调用，通知抢占(执行时间大于10ms的G)</li>
-</ul>
-</li>
-<li>归还内存：每5分钟归还GC后不再使用的span给操作系统(scavenge)</li>
-</ul>
-<h3 id="引用">引用</h3>
-<ul>
-<li>https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html</li>
-<li>https://zhao520a1a.github.io/2020/09/10/Go%E8%B0%83%E5%BA%A6%E7%AF%87/</li>
-<li>https://learnku.com/articles/41728</li>
-<li>https://www.zhihu.com/question/20862617</li>
-<li>https://morsmachine.dk/go-scheduler</li>
-<li>https://draveness.me/golang/docs/part3-runtime/ch06-concurrency/golang-goroutine/</li>
-</ul>
+<h3 id="mysql如何解决幻读">mysql如何解决幻读</h3>
+<h4 id="什么是幻读">什么是幻读?</h4>
+<p>在<strong>可重读读</strong>的隔离级别下，用当前读，前后读取两次，后一次后可以读到新的数据</p>
+<table>
+<thead>
+<tr>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>select * from x where xxx=xx for update<br/> result:1,2,3</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>insert into x value(xx)</td>
+</tr>
+<tr>
+<td>select * from x where xxx=xx for update<br/> result:1,2,3,4</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>如果是普通行锁，那么上面的就违背了RR级别下的可重复读的要求。</p>
+<h4 id="如何解决">如何解决</h4>
+<p>加入数据库中现在有五条数据1，3，5，7，10。 发生如下场景</p>
+<table>
+<thead>
+<tr>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>select * from x where xxx=8 for update<br/>这个时候(7,10]这个区间的数据会被锁住</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>insert into x value(8),因为锁住无法插入，被blocked</td>
+</tr>
+<tr>
+<td>select * from x where xxx=8 for update <br/>查询出来的就还是原来的数据</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>这样就通过 <strong>临键锁</strong>解决了幻读</p>
 
               </div>
               <div class="post-footer">
@@ -710,7 +678,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/gmp-xia/" title="GMP-下">GMP-下</a>
+      <a href="https://optimistic9527.github.io/post/mysql-suo-huan-du/" title="mysql锁-幻读">mysql锁-幻读</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -719,25 +687,23 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
-      <a href="https://optimistic9527.github.io/tag/S7eYTkKam/"># GMP</a>
+      <a href="https://optimistic9527.github.io/tag/jvMtpwfL3/"># 幻读</a>
     
-      <a href="https://optimistic9527.github.io/tag/EmwhFx_E-/"># Go</a>
+      <a href="https://optimistic9527.github.io/tag/cZbc1j9X7S/"># 锁</a>
     
-      <a href="https://optimistic9527.github.io/tag/4mFyd0jk6/"># 计算机组成原理</a>
+      <a href="https://optimistic9527.github.io/tag/QPXUForP2/"># mysql</a>
+    
+      <a href="https://optimistic9527.github.io/tag/NWdhSaxQH2/"># 数据库</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Channel" href="https://optimistic9527.github.io/post/channel/">Channel</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Channel" href="https://optimistic9527.github.io/post/channel/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="GMP-上" href="https://optimistic9527.github.io/post/gmp-shang/">GMP-上</a>
-        <a class="nav-mobile-next" title="GMP-上" href="https://optimistic9527.github.io/post/gmp-shang/">下一篇</a>
+        <a class="nav-pc-next" title="mysql-MVCC" href="https://optimistic9527.github.io/post/mysql-zong-jie-2/">mysql-MVCC</a>
+        <a class="nav-mobile-next" title="mysql-MVCC" href="https://optimistic9527.github.io/post/mysql-zong-jie-2/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
