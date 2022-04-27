@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>关于 | Optimistic9527</title>
+<title>mysql 索引 | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1651067807778">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="关于" />
-    <meta name="keywords" content="" />
+    <meta name="description" content="mysql 索引" />
+    <meta name="keywords" content="索引,mysql,数据库" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -229,10 +229,24 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+<li>
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E4%BC%98%E7%BC%BA%E7%82%B9">优缺点</a>
+<ul>
+<li><a href="#%E4%BC%98%E7%82%B9">优点</a></li>
+<li><a href="#%E7%BC%BA%E7%82%B9">缺点</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%86%E7%B1%BB">分类</a>
+<ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%88%86%E7%B1%BB">数据结构分类</a></li>
+<li><a href="#%E5%8A%9F%E8%83%BD%E5%88%86%E7%B1%BB">功能分类</a></li>
+</ul>
+</li>
+<li><a href="#%E7%B4%A2%E5%BC%95%E5%88%9B%E5%BB%BA%E7%9A%84%E8%A7%84%E8%8C%83">索引创建的规范</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -499,8 +513,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/about/">
-      关于
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/mysql-suo-yin/">
+      mysql 索引
     </a>
   </h1>
   <div class="post-meta">
@@ -508,30 +522,134 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2019-01-25</span>
+      <span>2022-04-21</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
+      <span class="meta-item">
+        <i class="fa fa-folder-o"></i>
+        <span class="pc-show">分类于</span>
+        
+          
+            <a href="https://optimistic9527.github.io/tag/WrJ9uf1zL/">
+              <span>索引</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/QPXUForP2/">
+              <span>mysql</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/NWdhSaxQH2/">
+              <span>数据库</span>
+            </a>
+          
+        
+      </span>
+      <span class="post-meta-divider">|</span>
+    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>31<span class="pc-show">字数</span></span>
+      <span>856<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                <h3 id="简介">简介</h3>
+<p>索引是在存储引擎用于快速找到记录的一种数据结构。在数据量越来越大的时代，索引对性能的影响越来越严重。所以建立适当的索引非常重要，想要建立适当的索引，就需要深入索引的原理。</p>
+<h3 id="优缺点">优缺点</h3>
+<h4 id="优点">优点</h4>
+<ul>
+<li>索引大大减少服务器需要扫码的数据量</li>
+<li>索引能帮助服务器减少排序与简历临时表</li>
+<li>索引可以把随机I/O变成顺序I/O</li>
+</ul>
+<h4 id="缺点">缺点</h4>
+<ul>
+<li>加索引会降低记录插入删除更新的的速度</li>
+<li>需要额外的存储空间</li>
+</ul>
+<h3 id="分类">分类</h3>
+<h4 id="数据结构分类">数据结构分类</h4>
+<ul>
+<li>hash索引<br>
+<img src="http://cdn.processon.com/6194c8c00e3e7409b9c25772?e=1637144273&amp;token=trhI0BY8QfVrIGn9nENop6JAc6l5nZuxhjQ62UfM:bfXJKobW_FmBxKGy2LGG0RFBL0o=" alt="" loading="lazy">
+<ul>
+<li>简介: 哈希索引使用了哈希算法，把值通过哈希算法计算出哈希值进行定位</li>
+<li>优缺点:
+<ul>
+<li>优点: 检索的时间复杂度理论上是O(1)，检索特别快</li>
+<li>缺点:
+<ul>
+<li>在数据量比较大的情况下，出现大量哈希碰撞，检索效率降低</li>
+<li>不支持按照索引值的顺序存储，所以无法排序,无法进行范围查询</li>
+<li>不支持最左匹配原则</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>B+树索引
+<ul>
+<li>简介: mysql中默认的索引类型,通过多叉树的方式组织在一起</li>
+<li>优缺点:
+<ul>
+<li>优点: 对比传统的二叉搜索树,当数据量比较大的时候，树的高度就会非常高，那么意味着I/O次数非常高，那么速度会很慢，B+TREE的树的高度非常低，寻找数据产生的I/O次数少</li>
+<li>缺点:
+<ul>
+<li>额外空间</li>
+<li>添加，删除，修改索引列是，会伴随页分裂，页空洞等性能损耗</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>存储方式分类:
+<ul>
+<li>聚簇索引(Clustered Index): 将索引与数据放在一起，并且在叶子结点存放数据(在Innodb中主键索引就是聚簇索引)<br>
+<img src="http://cdn.processon.com/6194ce1be0b34d64eb7b3ad2?e=1637145643&amp;token=trhI0BY8QfVrIGn9nENop6JAc6l5nZuxhjQ62UfM:mLVmas0LIPxH_tlNckIOPpTXtdw=" alt="" loading="lazy">
+<ul>
+<li>常见的聚簇索引
+<ul>
+<li>显示的主键列</li>
+<li>第一个唯一索引</li>
+<li>内置的6字节的ROWID</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>非聚簇索引/辅助索引(Secondary Index):通过索引检索到行号，再通过行号找到数据（Innodb是找到对应的主键id，再通过主键id找到对应的数据）<br>
+<img src="http://cdn.processon.com/6194ce4b0e3e7409b9c27e16?e=1637145691&amp;token=trhI0BY8QfVrIGn9nENop6JAc6l5nZuxhjQ62UfM:oEvUQT0kIs1QUcxPsxLhmkkDWD4=" alt="" loading="lazy"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="功能分类">功能分类</h4>
+<ul>
+<li>普通索引(INDEX): 这是最基本的索引类型，而且它没有唯一性之类的限制</li>
+<li>唯一索引(UNIQUE INDEX): 索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。</li>
+<li>主键索引(PRIMARY KEY):主键是一种唯一性索引，但它必须指定为“PRIMARY KEY”，且不允许有空值。</li>
+</ul>
+<h3 id="索引创建的规范">索引创建的规范</h3>
+<ul>
+<li>单张表中索引数量不超过五个，单个索引中的字段数不超过五个</li>
+<li>表必须有主键，推荐使用unsigned自增作为主键。唯一键由3以下字段组成，并且字段都是整形时，可使用唯一键作为主键</li>
+<li>禁止冗余索引(索引|(a,b,c),索引|(a,b))，禁止重复索引(索引|(a),索引|(a,主键ID))</li>
+<li>联表查询时，join列的数据类型必须相同，并且要建立索引</li>
+<li>不在低基数列上建立索引，如<code>性别</code></li>
+<li>选择区分度大的列建立索引，组合索引中，区分度大的字段放在最前面(有利于过滤掉更多的数据)</li>
+<li>合理使用覆盖索引减少IO跟避免排序</li>
+</ul>
 
               </div>
               <div class="post-footer">
@@ -542,7 +660,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/about/" title="关于">关于</a>
+      <a href="https://optimistic9527.github.io/post/mysql-suo-yin/" title="mysql 索引">mysql 索引</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -551,12 +669,26 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
+      <a href="https://optimistic9527.github.io/tag/WrJ9uf1zL/"># 索引</a>
+    
+      <a href="https://optimistic9527.github.io/tag/QPXUForP2/"># mysql</a>
+    
+      <a href="https://optimistic9527.github.io/tag/NWdhSaxQH2/"># 数据库</a>
+    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="索引优化" href="https://optimistic9527.github.io/post/suo-yin-you-hua/">索引优化</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="索引优化" href="https://optimistic9527.github.io/post/suo-yin-you-hua/">上一篇</a>
+      
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="mysql锁-幻读" href="https://optimistic9527.github.io/post/mysql-suo-huan-du/">mysql锁-幻读</a>
+        <a class="nav-mobile-next" title="mysql锁-幻读" href="https://optimistic9527.github.io/post/mysql-suo-huan-du/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
