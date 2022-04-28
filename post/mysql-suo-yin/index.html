@@ -8,7 +8,7 @@
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
 <title>mysql 索引 | Optimistic9527</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1651068018220">
+<link rel="shortcut icon" href="/favicon.ico?v=1651112708906">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -245,6 +245,12 @@
 </ul>
 </li>
 <li><a href="#%E7%B4%A2%E5%BC%95%E5%88%9B%E5%BB%BA%E7%9A%84%E8%A7%84%E8%8C%83">索引创建的规范</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83">问题思考</a>
+<ul>
+<li><a href="#%E7%BB%8F%E5%B8%B8%E5%9C%A8%E6%95%B0%E6%8D%AE%E9%87%8F%E5%BE%88%E5%A4%A7%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E6%88%91%E4%BB%AC%E8%A6%81%E6%8A%8A%E4%B8%BB%E9%94%AE%E7%94%A8%E6%95%B4%E6%95%B0%E4%BB%A3%E6%9B%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B9%B6%E4%B8%94%E6%98%AF%E5%A2%9E%E9%95%BF%E7%9A%84">经常在数据量很大的情况下我们要把主键用整数代替字符串，并且是增长的？</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E7%BB%8F%E5%B8%B8%E8%A2%AB%E8%A6%81%E6%B1%82%E5%8F%AA%E6%9F%A5%E8%AF%A2%E9%9C%80%E8%A6%81%E7%9A%84%E5%AD%97%E6%AE%B5">为什么我们经常被要求，只查询需要的字段？</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -553,12 +559,12 @@ window.addEventListener('load', function() {
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
+      <span>5分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>856<span class="pc-show">字数</span></span>
+      <span>1157<span class="pc-show">字数</span></span>
     </span>
     
   </div>
@@ -650,6 +656,15 @@ window.addEventListener('load', function() {
 <li>选择区分度大的列建立索引，组合索引中，区分度大的字段放在最前面(有利于过滤掉更多的数据)</li>
 <li>合理使用覆盖索引减少IO跟避免排序</li>
 </ul>
+<h3 id="问题思考">问题思考</h3>
+<h4 id="经常在数据量很大的情况下我们要把主键用整数代替字符串并且是增长的">经常在数据量很大的情况下我们要把主键用整数代替字符串，并且是增长的？</h4>
+<ol>
+<li>在使用BigInt的时候比UUID(为保证不重复一般都是UUID),占用的字节少，那么在B+Tree的结构中，就能存储更多的值。</li>
+<li>比字符串好排序</li>
+<li>如果你生成的是自增的（分布式id生成策略中都是增加的）,在插入时，就可以尽可能减少页分裂</li>
+</ol>
+<h4 id="为什么我们经常被要求只查询需要的字段">为什么我们经常被要求，只查询需要的字段？</h4>
+<p>在例如你查询只用到name时，select * from user where iphone=xxx，索引为（iphone，name）的时候，我们根据上面的innodb的索引结构学习到，你要查询索引中没有的字段的时候，需要先通过辅助索引找到主键索引的值，然后再找到对应的数据值（过程叫做回表），这样就多了I/O操作，如果你的sql改成select name from user where iphone=xxx，这个name值在辅助索引中已经有了，所以不需要再去主键索引中找数据，就提高了查询效率(这种情况叫做覆盖索引)</p>
 
               </div>
               <div class="post-footer">
