@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>map | Optimistic9527</title>
+<title>CAP | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1651997276286">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="map" />
-    <meta name="keywords" content="Map,Go" />
+    <meta name="description" content="CAP" />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -229,21 +229,12 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li>
+<li><a href="#cap%E7%90%86%E8%AE%BA%E7%BA%A7%E5%88%AB%E6%A6%82%E5%BF%B5">CAP理论级别概念</a>
 <ul>
-<li><a href="#map%E7%BB%93%E6%9E%84">Map结构</a></li>
-<li><a href="#%E6%A6%82%E8%A7%88%E5%9B%BE">概览图</a>
-<ul>
-<li><a href="#map%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0%E7%AE%80%E6%98%93%E6%B5%81%E7%A8%8B">map插入元素(简易流程)？</a></li>
-</ul>
-</li>
-<li><a href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E6%89%A9%E5%AE%B9">什么时候会扩容？</a>
-<ul>
-<li><a href="#%E5%BD%93%E8%B4%9F%E8%BD%BD%E5%9B%A0%E5%AD%90%E5%A4%A7%E4%BA%8E65%E7%9A%84%E6%97%B6%E5%80%99%E5%B0%B1%E4%BC%9A%E5%8F%91%E7%94%9F%E6%89%A9%E5%AE%B9hmapcount-2hmapb-65">当负载因子大于6.5的时候就会发生扩容(hmap.count / 2^hmap.B &gt; 6.5)</a></li>
-<li><a href="#%E5%BD%93%E6%BA%A2%E5%87%BA%E6%A1%B6%E8%BF%87%E5%A4%9A%E7%9A%84%E6%97%B6%E5%80%99">当溢出桶过多的时候()</a></li>
-</ul>
-</li>
-<li><a href="#%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%B8%90%E8%BF%9B%E5%BC%8F%E8%BF%81%E7%A7%BB">如何进行渐进式迁移？</a></li>
+<li><a href="#%E4%B8%80%E8%87%B4%E6%80%A7consistency">一致性(consistency):</a></li>
+<li><a href="#%E5%8F%AF%E7%94%A8%E6%80%A7availability">可用性(availability):</a></li>
+<li><a href="#%E5%88%86%E5%8C%BA%E5%AE%B9%E9%94%99%E6%80%A7partition-tolerance">分区容错性(Partition Tolerance):</a></li>
+<li><a href="#cpa%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3">CPA理论理解</a></li>
 </ul>
 </li>
 </ul>
@@ -512,8 +503,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/map/">
-      map
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/cap/">
+      CAP
     </a>
   </h1>
   <div class="post-meta">
@@ -521,90 +512,49 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2022-04-15</span>
+      <span>2022-05-08</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
-      <span class="meta-item">
-        <i class="fa fa-folder-o"></i>
-        <span class="pc-show">分类于</span>
-        
-          
-            <a href="https://optimistic9527.github.io/tag/iLqjAuvkX/">
-              <span>Map</span>
-            </a>、
-          
-        
-          
-            <a href="https://optimistic9527.github.io/tag/EmwhFx_E-/">
-              <span>Go</span>
-            </a>
-          
-        
-      </span>
-      <span class="post-meta-divider">|</span>
-    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
+      <span>2分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>628<span class="pc-show">字数</span></span>
+      <span>508<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <h3 id="map结构">Map结构</h3>
-<pre><code>type hmap struct {
-
-	count     int // 当前map中有多少个key,就是len()拿到的值
-	flags     uint8
-	B         uint8  //有2^B个桶
-	noverflow uint16 // 使用的溢出桶数量
-	hash0     uint32 // hash种子
-
-	buckets    unsafe.Pointer //桶的地址
-	oldbuckets unsafe.Pointer // 如果正在进行迁移，这是老桶的地址
-	nevacuate  uintptr        //渐进式扩容的情况下的记录下一个要被迁移的旧桶的编号
-
-	extra *mapextra // optional fields
-}
-</code></pre>
-<h3 id="概览图">概览图</h3>
-<figure data-type="image" tabindex="1"><img src="http://assets.processon.com/chart_image/625921d00e3e741fbdaac9b1.png" alt="" loading="lazy"></figure>
-<h4 id="map插入元素简易流程">map插入元素(简易流程)？</h4>
-<p>从上面的数据结构中我们可以看出来，map的桶的个数是2<sup>B次方个，那么桶的下表就是2</sup>B-1,这样的数字我们&amp;上任何数字，那么这个值一定在0-2^B-1。那么我们保证数字的散列性，就能尽可能让key分散到各个桶中。</p>
-<p>例如 现在有16桶那么例如我现在插入一个key进行hash运算后为101001101<br>
-101001101<br>
-&amp;000001111<br>
-0000001101<br>
-经过结算，我们发现，这个key就会落在index为13的桶中</p>
-<figure data-type="image" tabindex="2"><img src="http://assets.processon.com/chart_image/625935280791296b57b572db.png" alt="" loading="lazy"></figure>
-<h3 id="什么时候会扩容">什么时候会扩容？</h3>
-<h4 id="当负载因子大于65的时候就会发生扩容hmapcount-2hmapb-65">当负载因子大于6.5的时候就会发生扩容(hmap.count / 2^hmap.B &gt; 6.5)</h4>
-<p>为什么是6.5?<br>
-因为经过测算，在负载因子等于6.5，浪费的空间，跟溢出桶的个数有一个平衡吧。</p>
-<p>这种情况下会进行翻倍扩容，并且在进行数据迁移时进行渐进式迁移<br>
-<img src="http://assets.processon.com/chart_image/625957727d9c0833a423fc1c.png" alt="" loading="lazy"></p>
-<h4 id="当溢出桶过多的时候">当溢出桶过多的时候()</h4>
+                <h2 id="cap理论级别概念">CAP理论级别概念</h2>
+<h3 id="一致性consistency">一致性(consistency):</h3>
+<p>等同于所有节点访问<strong>同一份</strong>最新的数据副本</p>
+<h3 id="可用性availability">可用性(availability):</h3>
+<p>每次请求都能获取到非错的响应(但是并<strong>不能保证获取的数据为最新数据</strong>)</p>
+<h3 id="分区容错性partition-tolerance">分区容错性(Partition Tolerance):</h3>
+<p>以实际效果而言，分区相当于对通讯的<strong>时限要求</strong>。系统如若个不能在时限内达成数据一致性，就意味着发送了分区的情况，必须就当前操作在C与A之间作出选择(分区容忍性，是尽快任意数量的消息被节点间的网络丢失或延迟，系统仍然正常运行)</p>
+<h3 id="cpa理论理解">CPA理论理解</h3>
 <ul>
-<li>如果常规桶数目不大于2^15，那么使用的溢出桶数目超过常规桶就算是多了</li>
-<li>如果常规桶数目大于2<sup>15，那么使用溢出桶数目一旦超过2</sup>15就算多了</li>
+<li>
+<p>CAP中的C跟ACID中的C是不一样的。CAP中的C是指的是<strong>副本一致性</strong>。即所有副本给出的结果都一致。</p>
+</li>
+<li>
+<p>在没有网络分区，网络波动的情况下，我们无需为了P而进行舍弃A或者C;而当出现网络分区是，就会了保证P我们就要舍弃C和A中的一个。</p>
+</li>
 </ul>
-<p>其实就是很多数据被删除了，会导致这种情况的发生。进行等量扩容。这种情况下，如果把这些键值对重新安排到等量的新桶中，虽然哈希值没变，常规桶数目没变，每个键值对还是会选择与旧桶一样的新桶编号，<strong>但是能够存储的更加紧凑，进而减少溢出桶的使用</strong></p>
-<figure data-type="image" tabindex="3"><img src="http://assets.processon.com/chart_image/625958d7e0b34d6730050298.png" alt="" loading="lazy"></figure>
-<h3 id="如何进行渐进式迁移">如何进行渐进式迁移？</h3>
-<p>例如本来原来有4个桶，现在扩容后是8个桶</p>
-<p>如果你原来是在1号桶上,那么你的最后两位一定是0跟1。<br>
-xxxxxx01<br>
-00000011</p>
-<p>现在新桶的个数是8。那么如果原来的hash值的第三位是0，就分配在新桶的1号桶上。是1就分配在5号桶上。<br>
-xxxxx0/101<br>
-00000 1 11</p>
-<figure data-type="image" tabindex="4"><img src="http://assets.processon.com/chart_image/62595d26e0b34d6730050ace.png" alt="" loading="lazy"></figure>
+<p>举例说明</p>
+<figure data-type="image" tabindex="1"><img src="https://optimistic9527.github.io/post-images/1651997267327.png" alt="" loading="lazy"></figure>
+<p>一写的情况下，只要一个副本写入成功即可返回写入成功，出现网络分区后，三台及其的数据可能出现不一致，无法保证C;但因为可以正常的写入并且返回成功，A就得到了保证</p>
+<p>三写的情况下，需要三个副本写入成功才可返回成功，当出现网络分区后，无法写入到三个节点，会返回报错，所以无法保证A，就保证了C</p>
+<p>用CAP理论分析分布式数据库</p>
+<ul>
+<li>在分布式环境下，P是一定存在的，一旦出现网络分区，那么一致性和可用性就一定要抛弃一个。</li>
+<li>对于NoSQL数据库，更加注重可用性，所以一半会设计成一个AP系统</li>
+<li>对于分布式关系型数据库，必须要保证一致性，所以就会是一个CP系统</li>
+</ul>
 
               </div>
               <div class="post-footer">
@@ -615,7 +565,7 @@ xxxxx0/101<br>
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/map/" title="map">map</a>
+      <a href="https://optimistic9527.github.io/post/cap/" title="CAP">CAP</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -624,23 +574,15 @@ xxxxx0/101<br>
   </ul>
   <div class="tags">
     
-      <a href="https://optimistic9527.github.io/tag/iLqjAuvkX/"># Map</a>
-    
-      <a href="https://optimistic9527.github.io/tag/EmwhFx_E-/"># Go</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="mysql-核心概念" href="https://optimistic9527.github.io/post/mysql-innodb-zong-jie-1/">mysql-核心概念</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="mysql-核心概念" href="https://optimistic9527.github.io/post/mysql-innodb-zong-jie-1/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="Channel" href="https://optimistic9527.github.io/post/channel/">Channel</a>
-        <a class="nav-mobile-next" title="Channel" href="https://optimistic9527.github.io/post/channel/">下一篇</a>
+        <a class="nav-pc-next" title="mysql索引优化" href="https://optimistic9527.github.io/post/suo-yin-you-hua/">mysql索引优化</a>
+        <a class="nav-mobile-next" title="mysql索引优化" href="https://optimistic9527.github.io/post/suo-yin-you-hua/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
