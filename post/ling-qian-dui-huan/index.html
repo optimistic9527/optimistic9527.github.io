@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>关于 | Optimistic9527</title>
+<title>零钱兑换 | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1652425012964">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="关于" />
-    <meta name="keywords" content="" />
+    <meta name="description" content="零钱兑换" />
+    <meta name="keywords" content="动态规划,算法" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -229,10 +229,18 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+<li>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E7%AE%80%E4%BB%8B">题目简介</a></li>
+<li><a href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90">题目分析</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81%E5%B1%95%E7%A4%BA">代码展示</a>
+<ul>
+<li><a href="#java%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">java代码实现</a></li>
+<li><a href="#go%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">go代码实现</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -499,8 +507,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/about/">
-      关于
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/ling-qian-dui-huan/">
+      零钱兑换
     </a>
   </h1>
   <div class="post-meta">
@@ -508,30 +516,103 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2019-01-25</span>
+      <span>2022-04-25</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
+      <span class="meta-item">
+        <i class="fa fa-folder-o"></i>
+        <span class="pc-show">分类于</span>
+        
+          
+            <a href="https://optimistic9527.github.io/tag/l6u1s5VYe/">
+              <span>动态规划</span>
+            </a>、
+          
+        
+          
+            <a href="https://optimistic9527.github.io/tag/hE1VNgN_z/">
+              <span>算法</span>
+            </a>
+          
+        
+      </span>
+      <span class="post-meta-divider">|</span>
+    
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>31<span class="pc-show">字数</span></span>
+      <span>533<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                <h3 id="题目简介">题目简介</h3>
+<p>给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。</p>
+<p>计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。</p>
+<p>你可以认为每种硬币的数量是无限的。</p>
+<h3 id="题目分析">题目分析</h3>
+<p>这是一个典型的动态规划的题目，按照动态规划的三步骤</p>
+<ul>
+<li>base case: 找到基础形态，很明显的。当amount=0时，需求0个硬币</li>
+<li>状态: 原问题跟子问题的变量。从子问题一步步变成原问题。那么我们可以看出来这个题目中，就是amount就是这个状态它是从0-&gt;目标金额的过程。</li>
+<li>选择: 导致状态变化的原因。这里就是每当你选择了一个硬币的时候，目标金额就会变少。状态就会发生变化。</li>
+</ul>
+<p>因为这里状态只有一个，所以就是一个一维的dp数组。</p>
+<p>按照这个步骤写一个伪代码</p>
+<pre><code class="language-java">dp[0]=0
+for amount
+for coin in coins 
+if (amount&gt;coin){
+  dp[amount]=min(dp[amount],dp[amount-coin]+1)
+}
+return dp[amount]
+</code></pre>
+<h3 id="代码展示">代码展示</h3>
+<h4 id="java代码实现">java代码实现</h4>
+<pre><code class="language-java">public int coinChange(int[] coins, int amount) {
+        //创建一个dp数组
+        int[] dp=new int[amount+1];
+        //base case
+        dp[0]=0;
+        //状态的不断变化
+        for(int i=1;i&lt;=amount;i++){
+            //求最小值，所以需要初始化一下默认就初始化成最大值
+            dp[i] = amount+1;
+             //做出选择
+            for(int coin:coins){
+                //如果选择了当前硬币，那么代表就需要的最小硬币就要加一，那就就等于dp[i-coin]+1，当然这个要跟当前的需要的最小硬币做一个对比取小的哪一个
+                if(coin &lt;= i){
+                    dp[i]=Math.min(dp[i],dp[i-coin]+1);
+                }
+            }
+        }
+        return dp[amount]==amount+1?-1:dp[amount];
+    }
+</code></pre>
+<h4 id="go代码实现">go代码实现</h4>
+<pre><code class="language-go">func coinChange(coins []int, amount int) int {
+	dp := make([]int, amount+1, amount+1)
+	for i := 1; i &lt;= amount; i++ {
+		dp[i] = amount + 1
+		for _, coin := range coins {
+			if i &gt;= coin {
+				dp[i] = int(math.Min(float64(dp[i]), float64(dp[i-coin]+1)))
+			}
+		}
+	}
+
+	if dp[amount] &gt; amount {
+		return -1
+	}
+	return dp[amount]
+}
+</code></pre>
 
               </div>
               <div class="post-footer">
@@ -542,7 +623,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/about/" title="关于">关于</a>
+      <a href="https://optimistic9527.github.io/post/ling-qian-dui-huan/" title="零钱兑换">零钱兑换</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -551,12 +632,24 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
+      <a href="https://optimistic9527.github.io/tag/l6u1s5VYe/"># 动态规划</a>
+    
+      <a href="https://optimistic9527.github.io/tag/hE1VNgN_z/"># 算法</a>
+    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="最长递增子序列" href="https://optimistic9527.github.io/post/zui-chang-di-zeng-zi-xu-lie/">最长递增子序列</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="最长递增子序列" href="https://optimistic9527.github.io/post/zui-chang-di-zeng-zi-xu-lie/">上一篇</a>
+      
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="CAP" href="https://optimistic9527.github.io/post/cap/">CAP</a>
+        <a class="nav-mobile-next" title="CAP" href="https://optimistic9527.github.io/post/cap/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
