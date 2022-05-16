@@ -7,7 +7,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="感谢曾经的自己">
 <meta name="theme-color" content="#000">
-<title>最长递增子序列 | Optimistic9527</title>
+<title>主从复制 | Optimistic9527</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1652706708522">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -27,8 +27,8 @@
 
 
 
-    <meta name="description" content="最长递增子序列" />
-    <meta name="keywords" content="动态规划,算法" />
+    <meta name="description" content="主从复制" />
+    <meta name="keywords" content="主从复制,mysql" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -231,14 +231,18 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E9%A2%98%E7%9B%AE%E7%AE%80%E4%BB%8B">题目简介</a></li>
-<li><a href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90">题目分析</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%81%E5%B1%95%E7%A4%BA">代码展示</a>
+<li><a href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%BB%B6%E8%BF%9F">主从复制延迟</a>
 <ul>
-<li><a href="#java%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">java代码实现</a></li>
-<li><a href="#go%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">go代码实现</a></li>
+<li><a href="#%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0">产生的原因</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">解决方案</a>
+<ul>
+<li><a href="#%E4%BB%8E%E5%BA%93%E9%85%8D%E7%BD%AE%E6%96%B9%E9%9D%A2">从库配置方面</a></li>
+<li><a href="#%E5%B9%B6%E8%A1%8C%E5%A4%8D%E5%88%B6">并行复制</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#%E5%A4%8D%E5%88%B6%E6%A8%A1%E5%BC%8F%E5%A4%84%E7%90%86%E4%B8%BB%E4%BB%8E%E4%B8%80%E8%87%B4%E6%80%A7">复制模式(处理主从一致性)</a></li>
 </ul>
 </li>
 </ul>
@@ -507,8 +511,8 @@ window.addEventListener('load', function() {
             <div class="section bg-color post post-page">
               <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://optimistic9527.github.io/post/zui-chang-di-zeng-zi-xu-lie/">
-      最长递增子序列
+    <a class="post-title-link" href="https://optimistic9527.github.io/post/zhu-cong-fu-zhi/">
+      主从复制
     </a>
   </h1>
   <div class="post-meta">
@@ -516,7 +520,7 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2022-04-26</span>
+      <span>2022-04-28</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -525,14 +529,14 @@ window.addEventListener('load', function() {
         <span class="pc-show">分类于</span>
         
           
-            <a href="https://optimistic9527.github.io/tag/l6u1s5VYe/">
-              <span>动态规划</span>
+            <a href="https://optimistic9527.github.io/tag/NF_MMWp-e/">
+              <span>主从复制</span>
             </a>、
           
         
           
-            <a href="https://optimistic9527.github.io/tag/hE1VNgN_z/">
-              <span>算法</span>
+            <a href="https://optimistic9527.github.io/tag/QPXUForP2/">
+              <span>mysql</span>
             </a>
           
         
@@ -541,72 +545,74 @@ window.addEventListener('load', function() {
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>433<span class="pc-show">字数</span></span>
+      <span>819<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
               <div class="post-body next-md-body" id="post_body">
-                <h3 id="题目简介">题目简介</h3>
-<p>给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。</p>
-<p>子序列 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。</p>
-<h3 id="题目分析">题目分析</h3>
-<p>这是一个典型的动态规划的题目，按照动态规划的三步骤</p>
+                <h3 id="主从复制延迟">主从复制延迟</h3>
+<h4 id="产生的原因">产生的原因</h4>
 <ul>
-<li>base case: 找到基础形态，很明显的。当数组的元素一个时，最长子序列就是1</li>
-<li>状态: 原问题跟子问题的变量。从子问题一步步变成原问题。那么我们可以看出来这个题目中,随着数组长度变化，该长度的数组的最长dz</li>
-<li>选择: 导致状态变化的原因。当可以增长dp[i]的子序列时是否替换</li>
+<li>Master的Binlog的i/o的thread读写都是顺序i/o，速度比较快，但是SQL thread执行Relay log时需要对数据进行增加/删除/修改，数据是分散在磁盘上的，这就成为了随机i/o。就导致的了延迟(主要原因)</li>
+<li>主从所在机器网络延迟比较高</li>
+<li>大事物执行，如果Master一个事物执行一分钟，而binlog的写入必须要等待事物完成之后才会传给备库，那么这个时候就距离开始执行的时候已经延迟了1分钟</li>
+<li>在执行备库同步时，其它现场在执行加锁的查询操作，发生了锁抢占的问题。</li>
 </ul>
-<p>因为这里状态只有一个，所以就是一个一维的dp数组。</p>
-<figure data-type="image" tabindex="1"><img src="https://optimistic9527.github.io/post-images/1652354477249.gif" alt="" loading="lazy"></figure>
-<h3 id="代码展示">代码展示</h3>
-<h4 id="java代码实现">java代码实现</h4>
-<pre><code class="language-java"> public int lengthOfLIS(int[] nums) {
-        //最小的情况
-        int[] dp = new int[nums.length];
-        Arrays.fill(dp, 1);
-        //状态就是不断变长的数组
-        for (int i = 1; i &lt; nums.length + 1; i++) {
-            int value = nums[i];
-            for (int j = 0; j &lt; i; j++) {
-                //如果nums[i]&lt; 当前值的话， 那么就可以形成递增，那么就是dp[i]=Math.max(dp[i],dp[j]+1)
-                if (value &gt; nums[j]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-        }
-
-        int max = 0;
-        for (int n : dp) {
-            if (n &gt; max) {
-                max = n;
-            }
-        }
-        return max;
-    }
-</code></pre>
-<h4 id="go代码实现">go代码实现</h4>
-<pre><code class="language-go">func coinChange(coins []int, amount int) int {
-	dp := make([]int, amount+1, amount+1)
-	for i := 1; i &lt;= amount; i++ {
-		dp[i] = amount + 1
-		for _, coin := range coins {
-			if i &gt;= coin {
-				dp[i] = int(math.Min(float64(dp[i]), float64(dp[i-coin]+1)))
-			}
-		}
-	}
-
-	if dp[amount] &gt; amount {
-		return -1
-	}
-	return dp[amount]
-}</code></pre>
+<h4 id="解决方案">解决方案</h4>
+<p>架构方面</p>
+<ul>
+<li>业务持久化层采用分库架构，让不同的业务请求分散到不同的数据库服务上，分散单台机器的压力</li>
+<li>与业务服务之间添加缓存，减少mysql的读的压力</li>
+<li>更好的CPU，SSD，内存等</li>
+</ul>
+<h5 id="从库配置方面">从库配置方面</h5>
+<ul>
+<li>sync_binlog 设置的大一点
+<ul>
+<li>sync_binlog=0,代表每次提交事物都只writer，不fsync</li>
+<li>sync_binlog=1,代表每次提交事物都writer和fsync</li>
+<li>sync_binlog=M,代表每次提交事物都只writer,N个事物后fsync</li>
+</ul>
+</li>
+<li>直接禁用slave的binlog</li>
+<li>设置innodb_flush_log_at_trx_commit=1或者0
+<ul>
+<li>innodb_flush_log_at_trx_commit=0 log buffer将每秒一次地写入log file中，并且log file的flush(刷到磁盘)操作同时进行.该模式下，在事务提交的时候，不会主动触发写入磁盘的操作</li>
+<li>innodb_flush_log_at_trx_commit=1 每次事务提交时MySQL都会把log buffer的数据写入log file，并且flush(刷到磁盘)中去</li>
+<li>innodb_flush_log_at_trx_commit=2 每次事务提交时MySQL都会把log buffer的数据写入log file，但是flush(刷到磁盘)操作并不会同时进行。该模式下,MySQL会每秒执行一次 flush(刷到磁盘)操作</li>
+</ul>
+</li>
+</ul>
+<h5 id="并行复制">并行复制</h5>
+<figure data-type="image" tabindex="1"><img src="http://cdn.processon.com/61963872e0b34d64eb7f146f?e=1637238402&amp;token=trhI0BY8QfVrIGn9nENop6JAc6l5nZuxhjQ62UfM:v8Rk5TsXMcdnXdqDDfHofFtlQU4=" alt="" loading="lazy"></figure>
+<p>利用多线程能力并行执行，coordinator 就是原来的 sql_thread, 不过现在它不再直接更新数据了，只负责读取中转日志和分发事务。真正更新日志的，变成了 worker 线程。</p>
+<h3 id="复制模式处理主从一致性">复制模式(处理主从一致性)</h3>
+<ul>
+<li>异步复制: 主节点push binlog到从节点，这样在主节点宕机时，可能从节点并没有获取到最新的binlog日志，导致数据不一致</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="http://cdn.processon.com/61963a2863768938bc92b53f?e=1637238841&amp;token=trhI0BY8QfVrIGn9nENop6JAc6l5nZuxhjQ62UfM:DNE5XlYELgacpgC9A2LZOVzwLZc=" alt="" loading="lazy"></figure>
+<ul>
+<li>半同步复制: 主节点需要收到一台从节点已经写入了relay log后返回ACK消息给主节点，主节点才新型commit</li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="http://cdn.processon.com/61963b8b0e3e7409b9c68e99?e=1637239195&amp;token=trhI0BY8QfVrIGn9nENop6JAc6l5nZuxhjQ62UfM:hh8r-LpApxyGzAVE1sVoZY37X-Y=" alt="" loading="lazy"></figure>
+<ul>
+<li>全同步复制: 主节点需要收到所有从节点已经写入了relay log后返回ACK消息给主节点，主节点才新型commit</li>
+<li>GTID复制模式
+<ul>
+<li>主节点更新数据时，会在事务前产生GTID(server-id + transaction-id)，一起记录到binlog日志中</li>
+<li>从节点的I/O线程将变更的bin log，写入到本地的relay log中</li>
+<li>SQL线程从relay log中获取GTID，然后对比本地binlog是否有记录（所以MySQL从节点必须要开启binary log)（代替了原来的binlog+position的模式）</li>
+<li>如果有记录，说明该GTID的事务已经执行，从节点会忽略。</li>
+<li>如果没有记录，从节点就会从relay log中执行该GTID的事务，并记录到bin log。</li>
+</ul>
+</li>
+</ul>
 
               </div>
               <div class="post-footer">
@@ -617,7 +623,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://optimistic9527.github.io/post/zui-chang-di-zeng-zi-xu-lie/" title="最长递增子序列">最长递增子序列</a>
+      <a href="https://optimistic9527.github.io/post/zhu-cong-fu-zhi/" title="主从复制">主从复制</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -626,23 +632,19 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
-      <a href="https://optimistic9527.github.io/tag/l6u1s5VYe/"># 动态规划</a>
+      <a href="https://optimistic9527.github.io/tag/NF_MMWp-e/"># 主从复制</a>
     
-      <a href="https://optimistic9527.github.io/tag/hE1VNgN_z/"># 算法</a>
+      <a href="https://optimistic9527.github.io/tag/QPXUForP2/"># mysql</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="设计循环队列" href="https://optimistic9527.github.io/post/she-ji-xun-huan-dui-lie/">设计循环队列</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="设计循环队列" href="https://optimistic9527.github.io/post/she-ji-xun-huan-dui-lie/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="零钱兑换" href="https://optimistic9527.github.io/post/ling-qian-dui-huan/">零钱兑换</a>
-        <a class="nav-mobile-next" title="零钱兑换" href="https://optimistic9527.github.io/post/ling-qian-dui-huan/">下一篇</a>
+        <a class="nav-pc-next" title="设计循环队列" href="https://optimistic9527.github.io/post/she-ji-xun-huan-dui-lie/">设计循环队列</a>
+        <a class="nav-mobile-next" title="设计循环队列" href="https://optimistic9527.github.io/post/she-ji-xun-huan-dui-lie/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
